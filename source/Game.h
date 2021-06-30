@@ -3,6 +3,16 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include "Math.h"
+
+const float WIDTH = 1024.0f;
+const float HEIGHT = 768.0f;
+const float UPPER_LEFT_X = 100.0f;
+const float UPPER_LEFT_Y = 100.0f;
+const Vector2 FIELD_POSITION[] = {
+  Vector2(WIDTH/7, HEIGHT/7),
+  Vector2(WIDTH*6/7, HEIGHT*6/7) 
+};
 
 class Game
 {
@@ -65,5 +75,5 @@ private:
   
   // Game specific
   class Ship* mShip;
-  class Field* mFields;
+  std::vector<class Field*> mFields;
 };

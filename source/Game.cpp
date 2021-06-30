@@ -6,22 +6,23 @@
 #include <algorithm>
 #include "Field.h"
 
-const float WIDTH = 1024.0f;
-const float HEIGHT = 768.0f;
-const float UPPER_LEFT_X = 100.0f;
-const float UPPER_LEFT_Y = 100.0f;
+//const float WIDTH = 1024.0f;
+//const float HEIGHT = 768.0f;
+//const float UPPER_LEFT_X = 100.0f;
+//const float UPPER_LEFT_Y = 100.0f;
 
 Game::Game()
 :mWindow(nullptr), mRenderer(nullptr), mlsRunning(true), mUpdatingActors(false)
 {
-  
 }
 
 // Game specific _______________________________
 void Game::LoadData()
 {
-  mFields = new Field(this);
-  mFields->SetPosition(Vector2(WIDTH/2,HEIGHT/2));
+  for(auto vec : FIELD_POSITION)
+  {
+    new Field(this, vec.x, vec.y);
+  }
 }
 
 
@@ -41,16 +42,16 @@ void Game::UnloadData()
 
 void Game::AddField(Field *field)
 {
-  //mFields.emplace_back(field);
+  mFields.emplace_back(field);
 }
 
 void Game::RemoveField(Field *field)
 {
-  //auto iter = std::find(mFields.begin(), mFields.end(), field);
-  //if(iter != mFields.end())
-  //{
-    //mFields.erase(iter);
-  //}
+  auto iter = std::find(mFields.begin(), mFields.end(), field);
+  if(iter != mFields.end())
+  {
+    mFields.erase(iter);
+  }
 }
 
 
