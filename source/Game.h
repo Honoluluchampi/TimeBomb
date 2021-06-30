@@ -74,6 +74,7 @@ private:
   bool mUpdatingActors;
   
   // Game specific
-  class Ship* mShip;
+  class TBPlayer* mTBPlayer1;
+  class TBPlayer* mTBPlayer2;
   std::vector<class Field*> mFields;
 };

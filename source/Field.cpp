@@ -12,7 +12,7 @@ Field::Field(Game *game, float x, float y) : Actor(game)
     SetRotation(0);
 
     SpriteComponent* sc = new SpriteComponent(this, 50);
-    sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/dotpict.png"));
+    sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/field.png"));
 
     game -> AddField(this);
     // floating move

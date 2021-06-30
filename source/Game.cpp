@@ -5,11 +5,7 @@
 #include <SDL2/SDL_image.h>
 #include <algorithm>
 #include "Field.h"
-
-//const float WIDTH = 1024.0f;
-//const float HEIGHT = 768.0f;
-//const float UPPER_LEFT_X = 100.0f;
-//const float UPPER_LEFT_Y = 100.0f;
+#include "TBPlayer.h"
 
 Game::Game()
 :mWindow(nullptr), mRenderer(nullptr), mlsRunning(true), mUpdatingActors(false)
@@ -19,6 +15,16 @@ Game::Game()
 // Game specific _______________________________
 void Game::LoadData()
 {
+  // create player
+  mTBPlayer1 = new TBPlayer(this);
+  mTBPlayer1->SetPosition(FIELD_POSITION[0]);
+  mTBPlayer1->SetRotation(0);
+
+  mTBPlayer2 = new TBPlayer(this);
+  mTBPlayer2->SetPosition(FIELD_POSITION[1]);
+  mTBPlayer2->SetRotation(0);
+
+  // create field
   for(auto vec : FIELD_POSITION)
   {
     new Field(this, vec.x, vec.y);
