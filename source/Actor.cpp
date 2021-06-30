@@ -1,6 +1,6 @@
 #include "Actor.h"
-#include "Game.hpp"
-#include "Component.hpp"
+#include "Game.h"
+#include "Component.h"
 #include <algorithm>
 
 Actor::Actor(Game *game)
