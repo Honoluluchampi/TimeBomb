@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "Field.h"
 #include "TBPlayer.h"
+#include "TurnManager.h"
 
 Game::Game()
 :mWindow(nullptr), mRenderer(nullptr), mlsRunning(true), mUpdatingActors(false)
@@ -23,6 +24,9 @@ void Game::LoadData()
   mTBPlayer2 = new TBPlayer(this);
   mTBPlayer2->SetPosition(FIELD_POSITION[1]);
   mTBPlayer2->SetRotation(0);
+
+  // create TurnManager
+  mTurnManager = new TurnManager(this, mTBPlayer1, mTBPlayer2);
 
   // create field
   for(auto vec : FIELD_POSITION)

@@ -1,5 +1,6 @@
 #include "TBPlayer.h"
 #include "Game.h"
+//#include "Bomb.h"
 #include "SpriteComponent.h"
 
 TBPlayer::TBPlayer(Game *game) : Actor(game)
@@ -14,7 +15,13 @@ TBPlayer::~TBPlayer()
 
 }
 
-TBPlayer::GetBomb()
-{
-    
-}
+//void TBPlayer::GetBomb(Bomb *bomb)
+//{
+    //mPendingBombs.push_back(bomb);
+//}
+
+//void TBPlayer::SetBomb()
+//{
+
+//}
+

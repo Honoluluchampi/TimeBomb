@@ -76,5 +76,6 @@ private:
   // Game specific
   class TBPlayer* mTBPlayer1;
   class TBPlayer* mTBPlayer2;
+  class TurnManager* mTurnManager;
   std::vector<class Field*> mFields;
 };
