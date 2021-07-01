@@ -13,3 +13,8 @@ TBPlayer::~TBPlayer()
 {
 
 }
+
+TBPlayer::GetBomb()
+{
+    
+}
