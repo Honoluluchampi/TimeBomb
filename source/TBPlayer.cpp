@@ -2,12 +2,14 @@
 #include "Game.h"
 //#include "Bomb.h"
 #include "SpriteComponent.h"
+#include "Field.h"
 
-TBPlayer::TBPlayer(Game *game) : Actor(game)
+TBPlayer::TBPlayer(Game *game, Field *ip) : Actor(game), mCurrentField(ip)
 {
-    const std::string FIELD_IMAGE_PATH = "/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/ball_blue.png";
     SpriteComponent *sc = new SpriteComponent(this, 100);
-    sc->SetTexture(game->GetTexture(FIELD_IMAGE_PATH));
+    sc->SetTexture(game->GetTexture(BLUE_BALL_IMAGE_PATH));
+    SetPosition(mCurrentField->GetPosition());
+    SetRotation(mCurrentField->GetRotation());
 }
 
 TBPlayer::~TBPlayer()

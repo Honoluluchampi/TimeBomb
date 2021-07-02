@@ -4,7 +4,7 @@
 #include "Field.h"
 
 TurnManager::TurnManager(Game *game, TBPlayer *player1, TBPlayer *player2) : 
-mGame(game), mPlayer1(player1), mPlayer2(player2)
+Actor(game), mPlayer1(player1), mPlayer2(player2)
 {
     // player1 moves first.
     mTurn = true;
@@ -14,11 +14,19 @@ TurnManager::~TurnManager()
 {
 }
 
-void TurnManager::TurnSequence()
+void TurnManager::TurnSequence(bool turn)
 {
-    std::vector<Field*> cf = GetCandFields(mGame->mFields);
+    // current player
+    TBPlayer* cp = GetCurrentPlayer(turn);
+    std::vector<Field*> cf = GetCandFields(this->GetGame()->GetFields(), cp->GetCurrentField());
     ChooseField();
     ChangeTurn();
+}
+
+TBPlayer* TurnManager::GetCurrentPlayer(bool turn)
+{
+    if(turn) return mPlayer1;
+    else return mPlayer2;
 }
 
 void TurnManager::ChangeTurn()
@@ -36,7 +44,7 @@ void TurnManager::ChooseField()
 
 }
 
-std::vector<Field*> TurnManager::GetCandFields(std::vector<Field*> fields)
+std::vector<Field*> TurnManager::GetCandFields(std::vector<Field*> fields, Field* field)
 {
 
 }

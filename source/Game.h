@@ -14,6 +14,9 @@ const Vector2 FIELD_POSITION[] = {
   Vector2(WIDTH/7, HEIGHT/7),
   Vector2(WIDTH*6/7, HEIGHT*6/7) 
 };
+const int INITIAL_FIELD_FOR_1 = 0;
+const int INITIAL_FIELD_FOR_2 = 1;
+const std::string BLUE_BALL_IMAGE_PATH = "/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/ball_blue.png";
 
 class Game
 {
@@ -44,9 +47,8 @@ public:
   // chapter specific
   void AddField(class Field* field);
   void RemoveField(class Field* field);
-  //class Filed* GetFields() {return mFields;}
+  std::vector<class Field*> GetFields() {return mFields;}
 
-  std::vector<class Field*> mFields;
 private:
   // Helper functions for RunLoop()
   void ProcessInput();
@@ -81,4 +83,5 @@ private:
   class TBPlayer* mTBPlayer2;
   class TurnManager* mTurnManager;
   std::vector<std::vector<class Path*>> mFieldGraph;
+  std::vector<class Field*> mFields;
 };

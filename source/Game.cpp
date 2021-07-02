@@ -16,23 +16,18 @@ Game::Game()
 // Game specific _______________________________
 void Game::LoadData()
 {
-  // create player
-  mTBPlayer1 = new TBPlayer(this);
-  mTBPlayer1->SetPosition(FIELD_POSITION[0]);
-  mTBPlayer1->SetRotation(0);
-
-  mTBPlayer2 = new TBPlayer(this);
-  mTBPlayer2->SetPosition(FIELD_POSITION[1]);
-  mTBPlayer2->SetRotation(0);
-
-  // create TurnManager
-  mTurnManager = new TurnManager(this, mTBPlayer1, mTBPlayer2);
-
   // create field
   for(auto vec : FIELD_POSITION)
   {
     new Field(this, vec.x, vec.y);
   }
+
+  // create players
+  mTBPlayer1 = new TBPlayer(this, mFields[INITIAL_FIELD_FOR_1]);
+  mTBPlayer2 = new TBPlayer(this, mFields[INITIAL_FIELD_FOR_2]);
+
+  // create TurnManager
+  mTurnManager = new TurnManager(this, mTBPlayer1, mTBPlayer2);
 }
 
 
@@ -52,7 +47,7 @@ void Game::UnloadData()
 
 void Game::AddField(Field *field)
 {
-  mFields.emplace_back(field);
+  mFields.push_back(field);
 }
 
 void Game::RemoveField(Field *field)
