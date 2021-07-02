@@ -9,6 +9,7 @@ const float WIDTH = 1024.0f;
 const float HEIGHT = 768.0f;
 const float UPPER_LEFT_X = 100.0f;
 const float UPPER_LEFT_Y = 100.0f;
+const int INITIAL_FIELD_NUM =2;
 const Vector2 FIELD_POSITION[] = {
   Vector2(WIDTH/7, HEIGHT/7),
   Vector2(WIDTH*6/7, HEIGHT*6/7) 
@@ -44,6 +45,8 @@ public:
   void AddField(class Field* field);
   void RemoveField(class Field* field);
   //class Filed* GetFields() {return mFields;}
+
+  std::vector<class Field*> mFields;
 private:
   // Helper functions for RunLoop()
   void ProcessInput();
@@ -77,5 +80,5 @@ private:
   class TBPlayer* mTBPlayer1;
   class TBPlayer* mTBPlayer2;
   class TurnManager* mTurnManager;
-  std::vector<class Field*> mFields;
+  std::vector<std::vector<class Path*>> mFieldGraph;
 };
