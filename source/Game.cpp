@@ -30,7 +30,6 @@ void Game::LoadData()
   mTurnManager = new TurnManager(this, mTBPlayer1, mTBPlayer2);
 }
 
-
 void Game::UnloadData()
 {
   // Delete Actors

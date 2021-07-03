@@ -8,7 +8,7 @@ Cursor::Cursor(Game *game, TurnManager *manager) : //TurnManager *manager) :
 Actor(game), mManager(manager)
 {
     // get current field
-    mPointingField = mManager->GetCurrentPlayer(mManager->GetTurn())->GetCurrentField();
+    mPointingField = mManager->GetCurrentPlayer()->GetCurrentField();
     this->SetPosition(mPointingField->GetPosition());
 
     SpriteComponent* sc = new SpriteComponent(this, 60);
@@ -22,4 +22,5 @@ Cursor::~Cursor()
 void Cursor::ChangeChosingField(Field *field)
 {
     mPointingField = field;
+    this->SetPosition(mPointingField->GetPosition());
 }
