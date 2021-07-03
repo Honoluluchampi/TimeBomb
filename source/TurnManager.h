@@ -13,6 +13,7 @@ public:
     // organize actions in a turn
     void TurnSequence(bool turn);
     class TBPlayer* GetCurrentPlayer(bool turn);
+    bool GetTurn(){return mTurn;}
     // returns fields where players can visit
     std::vector<class Field*> GetCandFields(std::vector<class Field*>, class Field*);
     void ChangeCursor();
@@ -22,6 +23,7 @@ public:
 private:
     class TBPlayer* mPlayer1;
     class TBPlayer* mPlayer2;
+    class Cursor* mCursor;
 
     // represent which current turn is. (true:1, flase:2)
     bool mTurn;

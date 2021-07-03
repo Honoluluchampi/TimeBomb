@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "TBPlayer.h"
 #include "Field.h"
+#include "Cursor.h"
 
 TurnManager::TurnManager(Game *game, TBPlayer *player1, TBPlayer *player2) : 
 Actor(game), mPlayer1(player1), mPlayer2(player2)
@@ -19,7 +20,13 @@ void TurnManager::TurnSequence(bool turn)
     // current player
     TBPlayer* cp = GetCurrentPlayer(turn);
     std::vector<Field*> cf = GetCandFields(this->GetGame()->GetFields(), cp->GetCurrentField());
-    ChooseField();
+    // create cursor
+    mCursor = new Cursor(this->GetGame(), this);
+    bool chosing = true;
+    while(chosing)
+    {
+        ChooseField();
+    }
     ChangeTurn();
 }
 
