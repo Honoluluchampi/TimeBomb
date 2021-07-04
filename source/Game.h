@@ -9,10 +9,14 @@ const float WIDTH = 1024.0f;
 const float HEIGHT = 768.0f;
 const float UPPER_LEFT_X = 100.0f;
 const float UPPER_LEFT_Y = 100.0f;
-const int INITIAL_FIELD_NUM =2;
+const int INITIAL_FIELD_NUM =4;
 const Vector2 FIELD_POSITION[] = {
   Vector2(WIDTH/7, HEIGHT/7),
-  Vector2(WIDTH*6/7, HEIGHT*6/7) 
+  Vector2(WIDTH*6/7, HEIGHT*6/7),
+  Vector2(WIDTH*2/3, HEIGHT*1/3),
+  Vector2(WIDTH*1/3, HEIGHT*2/3),
+  Vector2(WIDTH*5/6, HEIGHT/7),
+  Vector2(WIDTH/7, HEIGHT*5/6)
 };
 const int INITIAL_FIELD_FOR_1 = 0;
 const int INITIAL_FIELD_FOR_2 = 1;

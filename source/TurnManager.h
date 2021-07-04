@@ -4,6 +4,7 @@
 
 enum Phase
 {
+    GET_CANDIDATE_FIELDS,
     CREATE_CURSOR,
     CHOOSE_FIELD,
     DELETE_CURSOR,
@@ -23,8 +24,7 @@ public:
     //void TurnSequence(bool turn);
     class TBPlayer* GetCurrentPlayer(){return mCurrentPlayer;}
     // returns fields where players can visit
-    //std::vector<class Field*> GetCandFields(std::vector<class Field*>, class Field*);
-    void ChangeCursor();
+    std::vector<class Field*> GetCandFields(std::vector<class Field*>, class Field*);
     void ChooseField(const uint8_t *keyState);
 
 
@@ -33,6 +33,7 @@ private:
     class TBPlayer* mPlayer2;
     class TBPlayer* mCurrentPlayer;
     class Cursor* mCursor;
+    std::vector<class Field*> mCandFields;
 
     // -1 : not input phase
     // 0 : choosing field phase

@@ -3,9 +3,10 @@
 #include "TBPlayer.h"
 #include "Field.h"
 #include "Cursor.h"
+#include <algorithm>
 
 TurnManager::TurnManager(Game *game, TBPlayer *player1, TBPlayer *player2) : 
-Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(0)
+Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_CANDIDATE_FIELDS)
 {
     // player1 play first
     mCurrentPlayer = mPlayer1;
@@ -19,6 +20,8 @@ void TurnManager::ActorInput(const uint8_t *keyState)
 {
     switch(mPhase)
     {
+        case GET_CANDIDATE_FIELDS :
+            mCandFields = GetCandFields(GetGame()->GetFields(), mCurrentPlayer->GetCurrentField());
         case CREATE_CURSOR :
             mCursor = new Cursor(this->GetGame(), this);
             mPhase = CHOOSE_FIELD;
@@ -35,33 +38,6 @@ void TurnManager::ActorInput(const uint8_t *keyState)
             else mCurrentPlayer = mPlayer1;
             mPhase = CREATE_CURSOR;
     }
-    // decide wether set a bomb phase : 1
-    // decide time limit phase : 2
-}
-
-//void TurnManager::TurnSequence(bool turn)
-//{
-    // current player
-    //TBPlayer* cp = GetCurrentPlayer(turn);
-    //std::vector<Field*> cf = GetCandFields(this->GetGame()->GetFields(), cp->GetCurrentField());
-    // create cursor
-    //mCursor = new Cursor(this->GetGame(), this);
-    //bool chosing = true;
-    //while(chosing)
-    //{
-        //ChooseField();
-    //}
-    //ChangeTurn();
-//}
-
-void TurnManager::ChangeTurn()
-{
-    //mTurn = !mTurn;
-}
-
-void TurnManager::ChangeCursor()
-{
-
 }
 
 void TurnManager::ChooseField(const uint8_t *state)
@@ -69,21 +45,25 @@ void TurnManager::ChooseField(const uint8_t *state)
     if(mCursor == nullptr) mCursor = new Cursor(this->GetGame(), this);
     if(state[SDL_SCANCODE_RIGHT])
     {
-
+        auto iter = std::find(mCandFields.begin(), mCandFields.end(), mCursor->GetPointingField());
+        ++iter;
+        if(iter == mCandFields.end()) iter = mCandFields.begin();
+        mCursor->ChangePointingField(*iter);
     }
     if(state[SDL_SCANCODE_LEFT])
     {
-
+        auto iter = std::find(mCandFields.begin(), mCandFields.end(), mCursor->GetPointingField());
+        if(iter == mCandFields.begin()) iter = mCandFields.end();
+        --iter;
+        mCursor->ChangePointingField(*iter);
     }
     if(state[SDL_SCANCODE_SPACE])
     {
         mPhase = DELETE_CURSOR;
-        //if(mCurrentPlayer == mPlayer1) mCurrentPlayer = mPlayer2;
-        //else mCurrentPlayer = mPlayer1;
     }
 }
 
-//std::vector<Field*> TurnManager::GetCandFields(std::vector<Field*> fields, Field* field)
-//{
-
-//}
+std::vector<Field*> TurnManager::GetCandFields(std::vector<Field*> fields, Field* field)
+{
+    return GetGame()->GetFields();
+}

@@ -19,7 +19,7 @@ Cursor::~Cursor()
 {
 }
 
-void Cursor::ChangeChosingField(Field *field)
+void Cursor::ChangePointingField(Field *field)
 {
     mPointingField = field;
     this->SetPosition(mPointingField->GetPosition());
