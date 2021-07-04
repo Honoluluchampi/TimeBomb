@@ -9,7 +9,10 @@ public:
     TBPlayer(class Game* game, class Field* ip); // ip : initial position
     ~TBPlayer(); // call the ending manager
 
+    // getter
     class Field* GetCurrentField(){return mCurrentField;}
+
+    void ChangeCurrentField(class Field *field);
 
     //void GetBomb(class Bomb* bomb);
     //void SetBomb();

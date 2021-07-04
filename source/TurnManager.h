@@ -6,7 +6,7 @@ enum Phase
 {
     GET_CANDIDATE_FIELDS,
     CREATE_CURSOR,
-    CHOOSE_FIELD,
+    CHOOSE_AND_MOVE_FIELD,
     DELETE_CURSOR,
     CHANGE_PLAYER
 };
@@ -28,6 +28,7 @@ public:
     // returns fields where players can visit
     std::vector<class Field*> GetCandFields(std::vector<class Field*>, class Field*);
     void ChooseField(SDL_Event &event);
+    void MovePlayer(class Field* field);
 
 
 private:

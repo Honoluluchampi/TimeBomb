@@ -23,10 +23,13 @@ void TurnManager::UpdateActor(float deltaTime)
         case GET_CANDIDATE_FIELDS :
             mCandFields = GetCandFields(GetGame()->GetFields(), mCurrentPlayer->GetCurrentField());
             mPhase = CREATE_CURSOR;
+            break;
         case CREATE_CURSOR :
             mCursor = new Cursor(this->GetGame(), this);
-            mPhase = CHOOSE_FIELD;
+            mPhase = CHOOSE_AND_MOVE_FIELD;
             break;
+        //case MOVE_PLAYER :
+
         case DELETE_CURSOR :
             delete mCursor;
             mPhase = CHANGE_PLAYER;
@@ -35,6 +38,7 @@ void TurnManager::UpdateActor(float deltaTime)
             if(mCurrentPlayer == mPlayer1) mCurrentPlayer = mPlayer2;
             else mCurrentPlayer = mPlayer1;
             mPhase = CREATE_CURSOR;
+            break;
     }
 }
 
@@ -42,10 +46,15 @@ void TurnManager::ActorInput(SDL_Event &event)
 {
     switch(mPhase)
     {
-        case CHOOSE_FIELD :
+        case CHOOSE_AND_MOVE_FIELD :
             ChooseField(event);
             break;
     }
+}
+
+std::vector<Field*> TurnManager::GetCandFields(std::vector<Field*> fields, Field* field)
+{
+    return GetGame()->GetFields();
 }
 
 void TurnManager::ChooseField(SDL_Event &event)
@@ -73,6 +82,9 @@ void TurnManager::ChooseField(SDL_Event &event)
             }
             if(key == SDLK_SPACE)
             {
+                auto iter = std::find(mCandFields.begin(), mCandFields.end(), mCursor->GetPointingField());
+                // MOVE ONTO NEXT FIELD
+                MovePlayer(*iter);
                 mPhase = DELETE_CURSOR;
             }
         }
@@ -82,7 +94,7 @@ void TurnManager::ChooseField(SDL_Event &event)
     }
 }
 
-std::vector<Field*> TurnManager::GetCandFields(std::vector<Field*> fields, Field* field)
+void TurnManager::MovePlayer(Field *field)
 {
-    return GetGame()->GetFields();
+    mCurrentPlayer->ChangeCurrentField(field);
 }

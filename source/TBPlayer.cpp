@@ -17,6 +17,12 @@ TBPlayer::~TBPlayer()
 
 }
 
+void TBPlayer::ChangeCurrentField(Field *field)
+{
+    mCurrentField = field;
+    SetPosition(field->GetPosition());
+}
+
 //void TBPlayer::GetBomb(Bomb *bomb)
 //{
     //mPendingBombs.push_back(bomb);
