@@ -10,6 +10,7 @@ Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_
 {
     // player1 play first
     mCurrentPlayer = mPlayer1;
+    mTurn = true;
 }
 
 TurnManager::~TurnManager()
@@ -25,18 +26,30 @@ void TurnManager::UpdateActor(float deltaTime)
             mPhase = CREATE_CURSOR;
             break;
         case CREATE_CURSOR :
-            mCursor = new Cursor(this->GetGame(), this);
+            mCursor = new Cursor(this->GetGame(), this, mTurn);
+            mPhase = CREATE_CAND_FIELD_SPRITE;
+            break;
+        case CREATE_CAND_FIELD_SPRITE :
+            for(auto field : mCandFields)
+            {
+                field->CreateCandSprite(this->GetGame(), mTurn);
+            }
             mPhase = CHOOSE_AND_MOVE_FIELD;
             break;
-        //case MOVE_PLAYER :
-
         case DELETE_CURSOR :
             delete mCursor;
-            mPhase = CHANGE_PLAYER;
+            mPhase = DELETE_CAND_FIELD_SPITE;
             break;
+        case DELETE_CAND_FIELD_SPITE :
+            for(auto field : mCandFields)
+            {
+                field->DeleteCandSprite();
+            }
+            mPhase = CHANGE_PLAYER;
         case CHANGE_PLAYER :
             if(mCurrentPlayer == mPlayer1) mCurrentPlayer = mPlayer2;
             else mCurrentPlayer = mPlayer1;
+            mTurn = !mTurn;
             mPhase = CREATE_CURSOR;
             break;
     }

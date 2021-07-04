@@ -4,7 +4,7 @@
 #include "TurnManager.h"
 #include "TBPlayer.h"
 
-Cursor::Cursor(Game *game, TurnManager *manager) : //TurnManager *manager) : 
+Cursor::Cursor(Game *game, TurnManager *manager, bool turn) : //TurnManager *manager) : 
 Actor(game), mManager(manager)
 {
     // get current field
@@ -12,7 +12,8 @@ Actor(game), mManager(manager)
     this->SetPosition(mPointingField->GetPosition());
 
     SpriteComponent* sc = new SpriteComponent(this, 60);
-    sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/cursor.png"));
+    if(turn) sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/red_cursor.png"));
+    else sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/blue_cursor.png"));
 }
 
 Cursor::~Cursor()

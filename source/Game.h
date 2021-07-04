@@ -20,7 +20,6 @@ const Vector2 FIELD_POSITION[] = {
 };
 const int INITIAL_FIELD_FOR_1 = 0;
 const int INITIAL_FIELD_FOR_2 = 1;
-const std::string BLUE_BALL_IMAGE_PATH = "/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/ball_blue.png";
 
 class Game
 {

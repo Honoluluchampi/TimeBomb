@@ -6,8 +6,10 @@ enum Phase
 {
     GET_CANDIDATE_FIELDS,
     CREATE_CURSOR,
+    CREATE_CAND_FIELD_SPRITE,
     CHOOSE_AND_MOVE_FIELD,
     DELETE_CURSOR,
+    DELETE_CAND_FIELD_SPITE,
     CHANGE_PLAYER
 };
 
@@ -39,4 +41,5 @@ private:
     std::vector<class Field*> mCandFields;
 
     int mPhase;
+    bool mTurn; // player1:true, player2:false
 };

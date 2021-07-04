@@ -4,7 +4,7 @@
 class Cursor : public Actor
 {
 public:
-    Cursor(class Game *game, class TurnManager *manager);
+    Cursor(class Game *game, class TurnManager *manager, bool turn);
     ~Cursor();
 
     void ChangePointingField(class Field *field);

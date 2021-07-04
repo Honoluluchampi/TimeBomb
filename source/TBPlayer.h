@@ -6,7 +6,7 @@ const int INITIAL_BOMB = 2;
 class TBPlayer : public Actor
 {
 public:
-    TBPlayer(class Game* game, class Field* ip); // ip : initial position
+    TBPlayer(class Game* game, class Field* ip, bool player); // ip : initial position
     ~TBPlayer(); // call the ending manager
 
     // getter

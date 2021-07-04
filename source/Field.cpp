@@ -23,3 +23,16 @@ Field::~Field()
 {
     GetGame()->RemoveField(this);
 }
+
+void Field::CreateCandSprite(Game *game, bool turn)
+{
+    //cand sprite component
+    mTemporalCandSprite = new SpriteComponent(this, 55);
+    if(turn) mTemporalCandSprite->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/blue_cand_field.png"));
+    else mTemporalCandSprite->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/red_cand_field.png"));
+}
+
+void Field::DeleteCandSprite()
+{
+    delete mTemporalCandSprite;
+}

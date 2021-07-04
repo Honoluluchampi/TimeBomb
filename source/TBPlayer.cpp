@@ -4,10 +4,11 @@
 #include "SpriteComponent.h"
 #include "Field.h"
 
-TBPlayer::TBPlayer(Game *game, Field *ip) : Actor(game), mCurrentField(ip)
+TBPlayer::TBPlayer(Game *game, Field *ip, bool player) : Actor(game), mCurrentField(ip)
 {
     SpriteComponent *sc = new SpriteComponent(this, 100);
-    sc->SetTexture(game->GetTexture(BLUE_BALL_IMAGE_PATH));
+    if(player) sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/blue_ball.png"));
+    else sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/red_ball.png"));
     SetPosition(mCurrentField->GetPosition());
     SetRotation(mCurrentField->GetRotation());
 }
@@ -32,4 +33,3 @@ void TBPlayer::ChangeCurrentField(Field *field)
 //{
 
 //}
-
