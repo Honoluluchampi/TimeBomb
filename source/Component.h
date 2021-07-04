@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdint>
-
+#include <SDL2/SDL.h>
 
 class Component
 {
@@ -12,7 +12,7 @@ public:
   virtual ~Component();
   // update function
   virtual void Update(float deltaTime);
-  virtual void ProcessInput(const uint8_t* keyState){}
+  virtual void ProcessInput(SDL_Event &event){}
 
   int GetUpdateOrder() const{return mUpdateOrder;}
   

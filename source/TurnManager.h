@@ -19,13 +19,15 @@ public:
 
     // turn over the turn
     void ChangeTurn();
+    // organize actions which dont depend on input
+    void UpdateActor(float deltaTime)override;
     // organize actions in a turn
-    void ActorInput(const uint8_t* keyState)override;
+    void ActorInput(SDL_Event &event)override;
     //void TurnSequence(bool turn);
     class TBPlayer* GetCurrentPlayer(){return mCurrentPlayer;}
     // returns fields where players can visit
     std::vector<class Field*> GetCandFields(std::vector<class Field*>, class Field*);
-    void ChooseField(const uint8_t *keyState);
+    void ChooseField(SDL_Event &event);
 
 
 private:
@@ -35,9 +37,5 @@ private:
     class Cursor* mCursor;
     std::vector<class Field*> mCandFields;
 
-    // -1 : not input phase
-    // 0 : choosing field phase
-    // 1 : deciding whether set a bomb phase
-    // 2 : deciding time limit phase
     int mPhase;
 };

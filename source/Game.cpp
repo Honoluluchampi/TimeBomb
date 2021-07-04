@@ -132,6 +132,14 @@ void Game::ProcessInput()
       case SDL_QUIT:
         mlsRunning = false;
         break;
+      
+      default :
+        mUpdatingActors = true;
+        for(auto actor : mActors)
+        {
+          actor->ProcessInput(event);
+        }
+        mUpdatingActors = false;
     }
   }
   
@@ -140,14 +148,6 @@ void Game::ProcessInput()
   {
     mlsRunning = false;
   }
-  
-  mUpdatingActors = true;
-  for(auto actor : mActors)
-  {
-    actor->ProcessInput(state);
-  }
-  mUpdatingActors = false;
-  
 }
 
 void Game::UpdateGame()

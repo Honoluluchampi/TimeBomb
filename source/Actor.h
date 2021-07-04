@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Math.h"
+#include <SDL2/SDL.h>
 
 class Actor
 {
@@ -24,9 +25,9 @@ public:
   virtual void UpdateActor(float deltaTime);
   
   // called from game, cannot override
-  void ProcessInput(const uint8_t* keyState);
+  void ProcessInput(SDL_Event &event);
   // Actor origin input func, can override
-  virtual void ActorInput(const uint8_t* keyState);
+  virtual void ActorInput(SDL_Event &event);
   
   // Getters/ Setters
   const Vector2& GetPosition() const { return mPosition; }

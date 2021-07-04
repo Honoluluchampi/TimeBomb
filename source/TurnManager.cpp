@@ -16,18 +16,16 @@ TurnManager::~TurnManager()
 {
 }
 
-void TurnManager::ActorInput(const uint8_t *keyState)
+void TurnManager::UpdateActor(float deltaTime)
 {
     switch(mPhase)
     {
         case GET_CANDIDATE_FIELDS :
             mCandFields = GetCandFields(GetGame()->GetFields(), mCurrentPlayer->GetCurrentField());
+            mPhase = CREATE_CURSOR;
         case CREATE_CURSOR :
             mCursor = new Cursor(this->GetGame(), this);
             mPhase = CHOOSE_FIELD;
-            break;
-        case CHOOSE_FIELD :
-            ChooseField(keyState);
             break;
         case DELETE_CURSOR :
             delete mCursor;
@@ -40,26 +38,47 @@ void TurnManager::ActorInput(const uint8_t *keyState)
     }
 }
 
-void TurnManager::ChooseField(const uint8_t *state)
+void TurnManager::ActorInput(SDL_Event &event)
 {
-    if(mCursor == nullptr) mCursor = new Cursor(this->GetGame(), this);
-    if(state[SDL_SCANCODE_RIGHT])
+    switch(mPhase)
     {
-        auto iter = std::find(mCandFields.begin(), mCandFields.end(), mCursor->GetPointingField());
-        ++iter;
-        if(iter == mCandFields.end()) iter = mCandFields.begin();
-        mCursor->ChangePointingField(*iter);
+        case CHOOSE_FIELD :
+            ChooseField(event);
+            break;
     }
-    if(state[SDL_SCANCODE_LEFT])
+}
+
+void TurnManager::ChooseField(SDL_Event &event)
+{
+    // cursor is already created in create_cursor phase.
+    //if(mCursor == nullptr) mCursor = new Cursor(this->GetGame(), this);
+    switch(event.type)
     {
-        auto iter = std::find(mCandFields.begin(), mCandFields.end(), mCursor->GetPointingField());
-        if(iter == mCandFields.begin()) iter = mCandFields.end();
-        --iter;
-        mCursor->ChangePointingField(*iter);
-    }
-    if(state[SDL_SCANCODE_SPACE])
-    {
-        mPhase = DELETE_CURSOR;
+    case SDL_KEYDOWN:
+        {
+            auto key = event.key.keysym.sym;
+            if(key == SDLK_RIGHT)
+            {
+                auto iter = std::find(mCandFields.begin(), mCandFields.end(), mCursor->GetPointingField());
+                ++iter;
+                if(iter == mCandFields.end()) iter = mCandFields.begin();
+                mCursor->ChangePointingField(*iter);
+            }
+            if(key == SDLK_LEFT)
+            {
+                auto iter = std::find(mCandFields.begin(), mCandFields.end(), mCursor->GetPointingField());
+                if(iter == mCandFields.begin()) iter = mCandFields.end();
+                --iter;
+                mCursor->ChangePointingField(*iter);
+            }
+            if(key == SDLK_SPACE)
+            {
+                mPhase = DELETE_CURSOR;
+            }
+        }
+        break;
+    default:
+        break;
     }
 }
 
