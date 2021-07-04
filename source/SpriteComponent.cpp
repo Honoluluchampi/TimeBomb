@@ -2,8 +2,11 @@
 #include "Actor.h"
 #include "Game.h"
 
+const int TEXWIDTH = 0;
+const int TEXHEIGHT = 756;
+
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
-:Component(owner),mTexture(nullptr),mDrawOrder(drawOrder),mTexWidth(0),mTexHeight(784.0f)
+:Component(owner),mTexture(nullptr),mTexWidth(TEXWIDTH),mTexHeight(TEXHEIGHT),mDrawOrder(drawOrder)
 {
   mOwner->GetGame()->AddSprite(this);
 }

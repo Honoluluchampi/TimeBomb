@@ -37,6 +37,7 @@ private:
     class TBPlayer* mPlayer1;
     class TBPlayer* mPlayer2;
     class TBPlayer* mCurrentPlayer;
+    class TBPlayer* mOppositePlayer;
     class Cursor* mCursor;
     std::vector<class Field*> mCandFields;
 

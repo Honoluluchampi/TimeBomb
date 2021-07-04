@@ -7,12 +7,14 @@
 #include <queue>
 #include <unordered_map>
 #include "Path.h"
+#include <utility>
 
 TurnManager::TurnManager(Game *game, TBPlayer *player1, TBPlayer *player2) : 
 Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_CANDIDATE_FIELDS)
 {
     // player1 play first
     mCurrentPlayer = mPlayer1;
+    mOppositePlayer = mPlayer2;
     mTurn = true;
 }
 
@@ -50,8 +52,7 @@ void TurnManager::UpdateActor(float deltaTime)
             }
             mPhase = CHANGE_PLAYER;
         case CHANGE_PLAYER :
-            if(mCurrentPlayer == mPlayer1) mCurrentPlayer = mPlayer2;
-            else mCurrentPlayer = mPlayer1;
+            std::swap(mCurrentPlayer, mOppositePlayer);
             mTurn = !mTurn;
             mPhase = GET_CANDIDATE_FIELDS;
             break;
@@ -92,6 +93,8 @@ std::vector<Field*> TurnManager::GetCandFields(std::vector<Field*> fields, Field
             Field *target;
             if(path->GetNord1() == nord) target = path->GetNord2();
             else target = path->GetNord1();
+            // opposite player's position is not available.
+            if(target == mOppositePlayer->GetCurrentField()) continue;
             if(dist[target] > value + 1)
             {
                 dist[target] = value + 1;
