@@ -7,6 +7,7 @@
 #include "Field.h"
 #include "TBPlayer.h"
 #include "TurnManager.h"
+#include "Path.h"
 
 Game::Game()
 :mWindow(nullptr), mRenderer(nullptr), mlsRunning(true), mUpdatingActors(false)
@@ -20,6 +21,12 @@ void Game::LoadData()
   for(auto vec : FIELD_POSITION)
   {
     new Field(this, vec.x, vec.y);
+  }
+
+  // create path
+  for(auto path : PATH_EDGES)
+  {
+    new Path(this, mFields[path.first], mFields[path.second]);
   }
 
   // create players

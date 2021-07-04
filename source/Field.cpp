@@ -3,6 +3,8 @@
 #include "SpriteComponent.h"
 #include "Math.h"
 #include <string>
+#include "Path.h"
+#include <algorithm>
 
 //std::string DIRNAME = "/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/";
 
@@ -35,4 +37,16 @@ void Field::CreateCandSprite(Game *game, bool turn)
 void Field::DeleteCandSprite()
 {
     delete mTemporalCandSprite;
+}
+
+void Field::AddPath(Path *path)
+{
+    mPaths.push_back(path);
+}
+
+void Field::RemovePath(Path *path)
+{
+    auto iter = std::find(mPaths.begin(), mPaths.end(), path);
+    // memory leak ? double delete?
+    mPaths.erase(iter);
 }

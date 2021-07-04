@@ -4,6 +4,9 @@
 #include "Field.h"
 #include "Cursor.h"
 #include <algorithm>
+#include <queue>
+#include <unordered_map>
+#include "Path.h"
 
 TurnManager::TurnManager(Game *game, TBPlayer *player1, TBPlayer *player2) : 
 Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_CANDIDATE_FIELDS)
@@ -50,7 +53,7 @@ void TurnManager::UpdateActor(float deltaTime)
             if(mCurrentPlayer == mPlayer1) mCurrentPlayer = mPlayer2;
             else mCurrentPlayer = mPlayer1;
             mTurn = !mTurn;
-            mPhase = CREATE_CURSOR;
+            mPhase = GET_CANDIDATE_FIELDS;
             break;
     }
 }
@@ -67,7 +70,40 @@ void TurnManager::ActorInput(SDL_Event &event)
 
 std::vector<Field*> TurnManager::GetCandFields(std::vector<Field*> fields, Field* field)
 {
-    return GetGame()->GetFields();
+    auto start = field;
+    std::unordered_map<Field*, int> dist;
+    // initialize dist
+    for(auto f : fields)
+    {
+        dist[f] = 1000;
+    }
+    dist[field] = 0;
+    std::vector<Field*> cf; // candidate fields
+    std::queue<Field*> que;
+    que.push(start);
+    while(!que.empty())
+    {
+        auto nord = que.front();
+        int value = dist[nord];
+        que.pop();
+        if(value >= PLAYER_STEP) continue;
+        for(auto path : nord->GetPaths())
+        {
+            Field *target;
+            if(path->GetNord1() == nord) target = path->GetNord2();
+            else target = path->GetNord1();
+            if(dist[target] > value + 1)
+            {
+                dist[target] = value + 1;
+                que.push(target);
+            }
+        }
+    }
+    for(auto f : fields)
+    {
+        if(dist[f] <= PLAYER_STEP) cf.push_back(f);
+    }
+    return cf;
 }
 
 void TurnManager::ChooseField(SDL_Event &event)

@@ -5,21 +5,36 @@
 #include <vector>
 #include "Math.h"
 
-const float WIDTH = 1024.0f;
-const float HEIGHT = 768.0f;
+const float WIDTH = 1024.0f + 100.0f;
+const float HEIGHT = 768.0f + 75.0f;
 const float UPPER_LEFT_X = 100.0f;
 const float UPPER_LEFT_Y = 100.0f;
-const int INITIAL_FIELD_NUM =4;
+const int PLAYER_STEP = 2;
+const int INITIAL_FIELD_NUM = 16;
 const Vector2 FIELD_POSITION[] = {
   Vector2(WIDTH/7, HEIGHT/7),
-  Vector2(WIDTH*6/7, HEIGHT*6/7),
-  Vector2(WIDTH*2/3, HEIGHT*1/3),
+  Vector2(WIDTH*1/3, HEIGHT*1/4),
+  Vector2(WIDTH*4/7, HEIGHT*2/9),
+  Vector2(WIDTH*3/4, HEIGHT*1/7),
+  Vector2(WIDTH*8/9, HEIGHT*2/9),
+  Vector2(WIDTH*1/6, HEIGHT*5/9),
+  Vector2(WIDTH*2/7, HEIGHT*3/7),
+  Vector2(WIDTH*5/9, HEIGHT*4/9),
+  Vector2(WIDTH*4/5, HEIGHT*1/3),
+  Vector2(WIDTH*1/8, HEIGHT*5/6),
   Vector2(WIDTH*1/3, HEIGHT*2/3),
-  Vector2(WIDTH*5/6, HEIGHT/7),
-  Vector2(WIDTH/7, HEIGHT*5/6)
+  Vector2(WIDTH*3/5, HEIGHT*3/5),
+  Vector2(WIDTH*8/9, HEIGHT*2/3),
+  Vector2(WIDTH*1/3, HEIGHT*7/8),
+  Vector2(WIDTH*3/5, HEIGHT*6/7),
+  Vector2(WIDTH*6/7, HEIGHT*5/6)
+};
+const std::pair<int,int> PATH_EDGES[] = {
+  {0,1}, {1,2}, {2,3}, {3,4}, {0,5}, {1,6}, {2,7}, {4,8}, {5,6}, {6,7}, {7,8},
+  {5,9}, {9,10}, {7, 10}, {8,11}, {8,12}, {11,12}, {10,13}, {11,14}, {12,15}, {14,15}
 };
 const int INITIAL_FIELD_FOR_1 = 0;
-const int INITIAL_FIELD_FOR_2 = 1;
+const int INITIAL_FIELD_FOR_2 = 15;
 
 class Game
 {
@@ -85,6 +100,5 @@ private:
   class TBPlayer* mTBPlayer1;
   class TBPlayer* mTBPlayer2;
   class TurnManager* mTurnManager;
-  std::vector<std::vector<class Path*>> mFieldGraph;
   std::vector<class Field*> mFields;
 };
