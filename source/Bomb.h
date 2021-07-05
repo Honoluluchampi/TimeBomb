@@ -8,11 +8,13 @@ public:
     ~Bomb();
 
     // change count function
+    class TBPlayer* GetBombOwner(){return mBombOwner;}
     void SetCount(int &count){mCount = count;}
     void SetCountSprite();
     void ChangeCountSprite();
     void DecrementCount();
     void CheckBombCount();
+    
 private:
     int mCount;
     class TBPlayer* mBombOwner;

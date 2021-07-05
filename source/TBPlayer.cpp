@@ -3,6 +3,8 @@
 #include "Bomb.h"
 #include "SpriteComponent.h"
 #include "Field.h"
+#include <algorithm>
+#include <iostream>
 
 TBPlayer::TBPlayer(Game *game, Field *ip, bool player, const int &bombnum) : Actor(game), mCurrentField(ip)
 {
@@ -35,8 +37,12 @@ void TBPlayer::GetBomb()
 
 void TBPlayer::SetBomb(int count)
 {
-    if(mPendingBombNum <= 0) return;
+    if(mPendingBombNum <= 0){
+        std::cout << "set" << std::endl;
+        return;
+    }
     mPendingBombNum--;
     Bomb *bomb = new Bomb(GetGame(), this, mCurrentField, count);
-    mSettedBombs.push_back(bomb);
+    std::cout << "before add" << std::endl;
+    std::cout << "after add" << std::endl;
 }

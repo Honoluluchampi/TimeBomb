@@ -65,7 +65,33 @@ void Game::RemoveField(Field *field)
   }
 }
 
+void Game::AddPath(Path *path)
+{
+  mPaths.push_back(path);
+}
 
+void Game::RemovePath(Path *path)
+{
+  auto iter = std::find(mPaths.begin(), mPaths.end(), path);
+  if(iter != mPaths.end())
+  {
+    mPaths.erase(iter);
+  }
+}
+
+void Game::AddSettedBomb(Bomb *bomb)
+{
+  mSettedBombs.push_back(bomb);
+}
+
+void Game::RemoveSettedBomb(Bomb *bomb)
+{
+  auto iter = std::find(mSettedBombs.begin(), mSettedBombs.end(), bomb);
+  if(iter != mSettedBombs.end())
+  {
+    mSettedBombs.erase(iter);
+  }
+}
 
 // ___________general functions______________
 

@@ -3,6 +3,7 @@
 #include "TBPlayer.h"
 #include "SpriteComponent.h"
 #include "Field.h"
+#include <iostream>
 
 Bomb::Bomb(Game *game, TBPlayer *owner, Field *field, int &count) : 
 Actor(game), mBombOwner(owner), mField(field)
@@ -19,11 +20,13 @@ Actor(game), mBombOwner(owner), mField(field)
     // position, rotation
     SetPosition(mField->GetPosition());
     SetRotation(mField->GetRotation());
+
+    game->AddSettedBomb(this);
 }
 
 Bomb::~Bomb()
 {
-    delete mField;
+    GetGame()->RemoveSettedBomb(this);
 }
 
 void Bomb::ChangeCountSprite()
@@ -56,10 +59,16 @@ void Bomb::SetCountSprite()
 void Bomb::DecrementCount()
 {
     mCount--;
+    std::cout << "decrement" << std::endl;
     ChangeCountSprite();
 }
 
 void Bomb::CheckBombCount()
 {
-    if(mCount <= 0) delete this;
+    std::cout << "delete?" << std::endl;
+    if(mCount <= 0)
+    {
+        delete this;
+    }
+    std::cout << "delete!" << std::endl;
 }

@@ -14,7 +14,7 @@
 TurnManager::TurnManager(Game *game, TBPlayer *player1, TBPlayer *player2) : 
 Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_CANDIDATE_FIELDS)
 {
-    // player1 play first
+    // player1 plays first
     mCurrentPlayer = mPlayer1;
     mOppositePlayer = mPlayer2;
     mTurn = true;
@@ -33,11 +33,13 @@ void TurnManager::UpdateActor(float deltaTime)
             mPhase = CREATE_CURSOR;
             std::cout << "get_cand_fields" << std::endl;
             break;
+
         case CREATE_CURSOR :
             mCursor = new Cursor(this->GetGame(), this, mTurn);
             mPhase = CREATE_CAND_FIELD_SPRITE;
             std::cout << "create_cursor" << std::endl;
             break;
+
         case CREATE_CAND_FIELD_SPRITE :
             for(auto field : mCandFields)
             {
@@ -46,12 +48,14 @@ void TurnManager::UpdateActor(float deltaTime)
             mPhase = CHOOSE_AND_MOVE_FIELD;
             std::cout << "create_cand_field_sprite" << std::endl;
             break;
+
         case DELETE_CURSOR :
             std::cout << "chooose_and_mobe_fields" << std::endl;
             delete mCursor;
             mPhase = DELETE_CAND_FIELD_SPITE;
             std::cout << "delete_cursor" << std::endl;
             break;
+
         case DELETE_CAND_FIELD_SPITE :
             for(auto field : mCandFields)
             {
@@ -60,27 +64,39 @@ void TurnManager::UpdateActor(float deltaTime)
             mPhase = DECREMENT_OPPOSITE_PLAYERS_BOMB;
             std::cout << "delete_cand_fields_sprite" << std::endl;
             break;
+
         case DECREMENT_OPPOSITE_PLAYERS_BOMB :
-            for(auto bomb : mOppositePlayer->GetSettedBombs())
+            for(auto bomb : GetGame()->GetSettedBombs())
             {
-                bomb->DecrementCount();
+                if(bomb->GetBombOwner() == mOppositePlayer)
+                {
+                    std::cout << "dec" << std::endl;
+                    bomb->DecrementCount();
+                }
             }
             mPhase = CHECK_BOMB_COUNT;
             std::cout << "decreametn bomb" << std::endl;
             break;
+
         case CHECK_BOMB_COUNT :
-            for(auto bomb : mOppositePlayer->GetSettedBombs())
+            for(auto bomb : GetGame()->GetSettedBombs())
             {
-                bomb->CheckBombCount();
+                if(bomb->GetBombOwner() == mOppositePlayer)
+                {
+                   bomb->CheckBombCount();
+                }
             }
             mPhase = WHETHER_SET_BOMB;
             std::cout << "check_bomb_count" << std::endl;
             break;
+
         case WHETHER_SET_BOMB :
             mCurrentPlayer->SetBomb(2);
             mPhase = CHANGE_PLAYER;
             std::cout << "whether set_bomb" << std::endl;
+            std::cout << "owner is " << mCurrentPlayer << std::endl;
             break;
+
         case CHANGE_PLAYER :
             std::swap(mCurrentPlayer, mOppositePlayer);
             mTurn = !mTurn;
@@ -119,9 +135,10 @@ std::vector<Field*> TurnManager::GetCandFields(std::vector<Field*> fields, Field
         int value = dist[nord];
         que.pop();
         if(value >= PLAYER_STEP) continue;
-        for(auto path : nord->GetPaths())
+        for(auto path : GetGame()->GetPaths())
         {
             Field *target;
+            if(path->GetNord1() != nord && path->GetNord2() != nord) continue;
             if(path->GetNord1() == nord) target = path->GetNord2();
             else target = path->GetNord1();
             // opposite player's position is not available.

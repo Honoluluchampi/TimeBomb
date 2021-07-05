@@ -24,9 +24,12 @@ Field::Field(Game *game, float x, float y) : Actor(game)
 Field::~Field()
 {
     GetGame()->RemoveField(this);
-    for(auto path : mPaths)
+    for(auto path : GetGame()->GetPaths())
     {
-        delete path;
+        if(path->GetNord1() == this || path->GetNord2() == this)
+        {
+            GetGame()->RemovePath(path);
+        }
     }
 }
 
@@ -41,16 +44,4 @@ void Field::CreateCandSprite(Game *game, bool turn)
 void Field::DeleteCandSprite()
 {
     delete mTemporalCandSprite;
-}
-
-void Field::AddPath(Path *path)
-{
-    mPaths.push_back(path);
-}
-
-void Field::RemovePath(Path *path)
-{
-    auto iter = std::find(mPaths.begin(), mPaths.end(), path);
-    // memory leak ? double delete?
-    mPaths.erase(iter);
 }

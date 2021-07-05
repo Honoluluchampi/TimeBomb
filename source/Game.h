@@ -68,9 +68,14 @@ public:
   void AddField(class Field* field);
   void RemoveField(class Field* field);
   std::vector<class Field*> GetFields() {return mFields;}
+
   void AddPath(class Path* path);
-  void RemoveBomb(class Path* path);
+  void RemovePath(class Path* path);
   std::vector<class Path*> GetPaths() { return mPaths;}
+  
+  void AddSettedBomb(class Bomb* bomb);
+  void RemoveSettedBomb(class Bomb* bomb);
+  std::vector<class Bomb*> GetSettedBombs() {return mSettedBombs;}
 
 private:
   // Helper functions for RunLoop()
@@ -107,4 +112,5 @@ private:
   class TurnManager* mTurnManager;
   std::vector<class Field*> mFields;
   std::vector<class Path*> mPaths;
+  std::vector<class Bomb*> mSettedBombs;
 };

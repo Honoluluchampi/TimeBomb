@@ -11,15 +11,11 @@ public:
 
     // getter
     class Field* GetCurrentField(){return mCurrentField;}
-    std::vector<class Bomb*> GetSettedBombs(){return mSettedBombs;}
-
     void ChangeCurrentField(class Field *field);
 
     void GetBomb();
     void SetBomb(int count);
-
 private:
-    std::vector<class Bomb*> mSettedBombs;
     int mPendingBombNum;
     class Field* mCurrentField;
 };
