@@ -24,6 +24,10 @@ Field::Field(Game *game, float x, float y) : Actor(game)
 Field::~Field()
 {
     GetGame()->RemoveField(this);
+    for(auto path : mPaths)
+    {
+        delete path;
+    }
 }
 
 void Field::CreateCandSprite(Game *game, bool turn)

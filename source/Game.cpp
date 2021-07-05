@@ -30,8 +30,8 @@ void Game::LoadData()
   }
 
   // create players
-  mTBPlayer1 = new TBPlayer(this, mFields[INITIAL_FIELD_FOR_1], true);
-  mTBPlayer2 = new TBPlayer(this, mFields[INITIAL_FIELD_FOR_2], false);
+  mTBPlayer1 = new TBPlayer(this, mFields[INITIAL_FIELD_FOR_1], true, INITIAL_PENDING_BOMB_NUM);
+  mTBPlayer2 = new TBPlayer(this, mFields[INITIAL_FIELD_FOR_2], false, INITIAL_PENDING_BOMB_NUM);
 
   // create TurnManager
   mTurnManager = new TurnManager(this, mTBPlayer1, mTBPlayer2);

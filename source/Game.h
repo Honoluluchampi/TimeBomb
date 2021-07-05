@@ -10,6 +10,8 @@ const float HEIGHT = 768.0f + 75.0f;
 const float UPPER_LEFT_X = 100.0f;
 const float UPPER_LEFT_Y = 100.0f;
 const int PLAYER_STEP = 2;
+const int MAX_PENDING_BOMB_NUM = 2;
+const int INITIAL_PENDING_BOMB_NUM = 2;
 const int INITIAL_FIELD_NUM = 16;
 const Vector2 FIELD_POSITION[] = {
   Vector2(WIDTH/7, HEIGHT/7),
@@ -66,6 +68,9 @@ public:
   void AddField(class Field* field);
   void RemoveField(class Field* field);
   std::vector<class Field*> GetFields() {return mFields;}
+  void AddPath(class Path* path);
+  void RemoveBomb(class Path* path);
+  std::vector<class Path*> GetPaths() { return mPaths;}
 
 private:
   // Helper functions for RunLoop()
@@ -101,4 +106,5 @@ private:
   class TBPlayer* mTBPlayer2;
   class TurnManager* mTurnManager;
   std::vector<class Field*> mFields;
+  std::vector<class Path*> mPaths;
 };

@@ -8,6 +8,8 @@
 #include <unordered_map>
 #include "Path.h"
 #include <utility>
+#include "Bomb.h"
+#include <iostream>
 
 TurnManager::TurnManager(Game *game, TBPlayer *player1, TBPlayer *player2) : 
 Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_CANDIDATE_FIELDS)
@@ -29,10 +31,12 @@ void TurnManager::UpdateActor(float deltaTime)
         case GET_CANDIDATE_FIELDS :
             mCandFields = GetCandFields(GetGame()->GetFields(), mCurrentPlayer->GetCurrentField());
             mPhase = CREATE_CURSOR;
+            std::cout << "get_cand_fields" << std::endl;
             break;
         case CREATE_CURSOR :
             mCursor = new Cursor(this->GetGame(), this, mTurn);
             mPhase = CREATE_CAND_FIELD_SPRITE;
+            std::cout << "create_cursor" << std::endl;
             break;
         case CREATE_CAND_FIELD_SPRITE :
             for(auto field : mCandFields)
@@ -40,21 +44,48 @@ void TurnManager::UpdateActor(float deltaTime)
                 field->CreateCandSprite(this->GetGame(), mTurn);
             }
             mPhase = CHOOSE_AND_MOVE_FIELD;
+            std::cout << "create_cand_field_sprite" << std::endl;
             break;
         case DELETE_CURSOR :
+            std::cout << "chooose_and_mobe_fields" << std::endl;
             delete mCursor;
             mPhase = DELETE_CAND_FIELD_SPITE;
+            std::cout << "delete_cursor" << std::endl;
             break;
         case DELETE_CAND_FIELD_SPITE :
             for(auto field : mCandFields)
             {
                 field->DeleteCandSprite();
             }
+            mPhase = DECREMENT_OPPOSITE_PLAYERS_BOMB;
+            std::cout << "delete_cand_fields_sprite" << std::endl;
+            break;
+        case DECREMENT_OPPOSITE_PLAYERS_BOMB :
+            for(auto bomb : mOppositePlayer->GetSettedBombs())
+            {
+                bomb->DecrementCount();
+            }
+            mPhase = CHECK_BOMB_COUNT;
+            std::cout << "decreametn bomb" << std::endl;
+            break;
+        case CHECK_BOMB_COUNT :
+            for(auto bomb : mOppositePlayer->GetSettedBombs())
+            {
+                bomb->CheckBombCount();
+            }
+            mPhase = WHETHER_SET_BOMB;
+            std::cout << "check_bomb_count" << std::endl;
+            break;
+        case WHETHER_SET_BOMB :
+            mCurrentPlayer->SetBomb(2);
             mPhase = CHANGE_PLAYER;
+            std::cout << "whether set_bomb" << std::endl;
+            break;
         case CHANGE_PLAYER :
             std::swap(mCurrentPlayer, mOppositePlayer);
             mTurn = !mTurn;
             mPhase = GET_CANDIDATE_FIELDS;
+            std::cout << "change_plyaer" << std::endl;
             break;
     }
 }

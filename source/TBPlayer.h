@@ -6,20 +6,20 @@ const int INITIAL_BOMB = 2;
 class TBPlayer : public Actor
 {
 public:
-    TBPlayer(class Game* game, class Field* ip, bool player); // ip : initial position
+    TBPlayer(class Game* game, class Field* ip, bool player, const int &bombnum); // ip : initial position
     ~TBPlayer(); // call the ending manager
 
     // getter
     class Field* GetCurrentField(){return mCurrentField;}
+    std::vector<class Bomb*> GetSettedBombs(){return mSettedBombs;}
 
     void ChangeCurrentField(class Field *field);
 
-    //void GetBomb(class Bomb* bomb);
-    //void SetBomb();
+    void GetBomb();
+    void SetBomb(int count);
 
 private:
-    //std::vector<class Bomb*> mPendingBombs;
-    //std::vector<class Bomb*> mSettedBombs;
-    //int mBombNum;
+    std::vector<class Bomb*> mSettedBombs;
+    int mPendingBombNum;
     class Field* mCurrentField;
 };
