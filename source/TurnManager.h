@@ -34,8 +34,9 @@ public:
     std::vector<class Field*> GetCandFields(std::vector<class Field*>, class Field*);
     void ChooseField(SDL_Event &event);
     void MovePlayer(class Field* field);
-
-
+    // remaining bomb number sprite
+    void SetRemainingBombNum(int &count);
+    void ChangePendingBombNum(int count);
 private:
     class TBPlayer* mPlayer1;
     class TBPlayer* mPlayer2;
@@ -43,6 +44,7 @@ private:
     class TBPlayer* mOppositePlayer;
     class Cursor* mCursor;
     std::vector<class Field*> mCandFields;
+    class SpriteComponent* mRemainingBombNum;
 
     int mPhase;
     bool mTurn; // player1:true, player2:false

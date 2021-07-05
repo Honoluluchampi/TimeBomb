@@ -15,6 +15,11 @@ public:
 
     void GetBomb();
     void SetBomb(int count);
+
+    void SetCountSprite(int &count);
+    void SetCountSprite(const int &count);
+
+    int GetPendingBombNum(){return mPendingBombNum;}
 private:
     int mPendingBombNum;
     class Field* mCurrentField;

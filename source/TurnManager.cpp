@@ -10,6 +10,7 @@
 #include <utility>
 #include "Bomb.h"
 #include <iostream>
+#include "SpriteComponent.h"
 
 TurnManager::TurnManager(Game *game, TBPlayer *player1, TBPlayer *player2) : 
 Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_CANDIDATE_FIELDS)
@@ -18,6 +19,13 @@ Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_
     mCurrentPlayer = mPlayer1;
     mOppositePlayer = mPlayer2;
     mTurn = true;
+
+    mRemainingBombNum = new SpriteComponent(this, 200);
+    // not sofisticated
+    int inibom = INITIAL_PENDING_BOMB_NUM;
+    SetRemainingBombNum(inibom);
+    SetPosition(PENDING_BOMB_NUM_POSITION);
+    SetRotation(0);
 }
 
 TurnManager::~TurnManager()
@@ -91,7 +99,9 @@ void TurnManager::UpdateActor(float deltaTime)
             break;
 
         case WHETHER_SET_BOMB :
+            // judge whether set a bomb or not
             mCurrentPlayer->SetBomb(2);
+            if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
             mPhase = CHANGE_PLAYER;
             std::cout << "whether set_bomb" << std::endl;
             std::cout << "owner is " << mCurrentPlayer << std::endl;
@@ -197,4 +207,36 @@ void TurnManager::ChooseField(SDL_Event &event)
 void TurnManager::MovePlayer(Field *field)
 {
     mCurrentPlayer->ChangeCurrentField(field);
+}
+
+void TurnManager::SetRemainingBombNum(int &num)
+{
+    switch(num){
+        case 0 :
+            mRemainingBombNum->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/zero.png"));
+            break;
+        case 1 : 
+            mRemainingBombNum->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/one.png"));
+            break;
+        case 2 : 
+            mRemainingBombNum->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/two.png"));
+            break;
+        case 3 : 
+            mRemainingBombNum->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/three.png"));
+            break;
+        case 4 : 
+            mRemainingBombNum->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/four.png"));
+            break;
+        default :
+            break;
+    }
+}
+
+void TurnManager::ChangePendingBombNum(int count)
+{
+    delete mRemainingBombNum;
+    mRemainingBombNum = new SpriteComponent(this, 200);
+    SetRemainingBombNum(count);
+    SetPosition(PENDING_BOMB_NUM_POSITION);
+    SetRotation(0);
 }

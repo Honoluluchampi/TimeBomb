@@ -38,6 +38,8 @@ const std::pair<int,int> PATH_EDGES[] = {
 const int INITIAL_FIELD_FOR_1 = 0;
 const int INITIAL_FIELD_FOR_2 = 15;
 
+const Vector2 PENDING_BOMB_NUM_POSITION = Vector2(WIDTH * 8/9, HEIGHT * 1/9);
+
 class Game
 {
 public:
@@ -72,7 +74,7 @@ public:
   void AddPath(class Path* path);
   void RemovePath(class Path* path);
   std::vector<class Path*> GetPaths() { return mPaths;}
-  
+
   void AddSettedBomb(class Bomb* bomb);
   void RemoveSettedBomb(class Bomb* bomb);
   std::vector<class Bomb*> GetSettedBombs() {return mSettedBombs;}

@@ -6,7 +6,8 @@
 #include <algorithm>
 #include <iostream>
 
-TBPlayer::TBPlayer(Game *game, Field *ip, bool player, const int &bombnum) : Actor(game), mCurrentField(ip)
+TBPlayer::TBPlayer(Game *game, Field *ip, bool player, const int &bombnum) : 
+Actor(game), mCurrentField(ip)
 {
     SpriteComponent *sc = new SpriteComponent(this, 100);
     if(player) sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/blue_ball.png"));
