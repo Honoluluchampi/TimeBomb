@@ -21,7 +21,8 @@ Actor(game), mBombOwner(owner), mField(field)
     SetPosition(mField->GetPosition());
     SetRotation(mField->GetRotation());
 
-    game->AddSettedBomb(this);
+    // add in turnmanager::setbomb
+    //game->AddSettedBomb(this);
 }
 
 Bomb::~Bomb()

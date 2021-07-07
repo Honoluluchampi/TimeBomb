@@ -44,6 +44,7 @@ void TBPlayer::SetBomb(int count)
     }
     mPendingBombNum--;
     Bomb *bomb = new Bomb(GetGame(), this, mCurrentField, count);
+    GetGame()->AddSettedBomb(bomb);
     std::cout << "before add" << std::endl;
     std::cout << "after add" << std::endl;
 }

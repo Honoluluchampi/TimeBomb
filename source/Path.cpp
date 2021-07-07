@@ -10,7 +10,7 @@ Path::Path(Game *game, Field *nord1, Field *nord2)
     if(mNord1->GetPosition().y < mNord2->GetPosition().y) std::swap(mNord1, mNord2);
     SpriteComponent *sc = new SpriteComponent(this, 30);
     sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/path.png"));
-    auto pos = mNord1->GetPosition() + mNord2->GetPosition();
+    auto pos = mNord1->GetPosition() + mNord2->GetPosition() + PATH_SLIDE;
     pos.x /= 2.0f; pos.y /= 2.0f;
     float rotation;
     if(std::abs(mNord1->GetPosition().x - mNord2->GetPosition().x) < 0.001f)
@@ -19,7 +19,9 @@ Path::Path(Game *game, Field *nord1, Field *nord2)
     }
     else rotation = std::atan((mNord2->GetPosition().y-mNord1->GetPosition().y)/(mNord2->GetPosition().x - mNord1->GetPosition().x));
     SetPosition(pos);
-    SetRotation(rotation);
+    SetRotation(-rotation);
+    float dist = sqrt(std::pow(mNord1->GetPosition().x - mNord2->GetPosition().x, 2.0) + std::pow(mNord1->GetPosition().y - mNord2->GetPosition().y, 2.0));
+    SetScale(PATH_SCALE * dist);
     game->AddPath(this);
 }
 

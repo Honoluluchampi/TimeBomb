@@ -3,6 +3,8 @@
 
 const int DEFAULT_WEIGHT = 1;
 const int DEFAULT_HEAVY_WEIGHT = 10000;
+const float PATH_SCALE = 0.0045f;
+const Vector2 PATH_SLIDE = Vector2(20.0f, 65.0f);
 
 class Path : public Actor
 {

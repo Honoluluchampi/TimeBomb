@@ -10,6 +10,8 @@ const float HEIGHT = 768.0f + 75.0f;
 const float UPPER_LEFT_X = 100.0f;
 const float UPPER_LEFT_Y = 100.0f;
 const int PLAYER_STEP = 2;
+//const float PATH_SCALE = 0.001f;
+//const Vector2 PATH_SLIDE = Vector2(0.0f, 0.0f);
 const int MAX_PENDING_BOMB_NUM = 2;
 const int INITIAL_PENDING_BOMB_NUM = 2;
 const int INITIAL_FIELD_NUM = 16;
@@ -32,8 +34,8 @@ const Vector2 FIELD_POSITION[] = {
   Vector2(WIDTH*6/7, HEIGHT*5/6)
 };
 const std::pair<int,int> PATH_EDGES[] = {
-  {0,1}, {1,2}, {2,3}, {3,4}, {0,5}, {1,6}, {2,7}, {4,8}, {5,6}, {6,7}, {7,8},
-  {5,9}, {9,10}, {7, 10}, {8,11}, {8,12}, {11,12}, {10,13}, {11,14}, {12,15}, {13,14}, {14,15}
+  {1,0}, {2,1}, {3,2}, {4,3}, {5,0}, {6,1}, {7,2}, {8,4}, {6,5}, {7,6}, {8,7},
+  {9,5}, {10,9}, {10,7}, {11,8}, {12,8}, {12,11}, {10,13}, {11,14}, {15,12}, {14,13}, {15,14}
 };
 const int INITIAL_FIELD_FOR_1 = 0;
 const int INITIAL_FIELD_FOR_2 = 15;
