@@ -11,6 +11,7 @@
 #include "Bomb.h"
 #include <iostream>
 #include "SpriteComponent.h"
+#include <cassert>
 
 TurnManager::TurnManager(Game *game, TBPlayer *player1, TBPlayer *player2) : 
 Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_CANDIDATE_FIELDS)
@@ -100,8 +101,12 @@ void TurnManager::UpdateActor(float deltaTime)
 
         case WHETHER_SET_BOMB :
             // judge whether set a bomb or not
+            std::cout << "before current" << std::endl;
+            assert(mCurrentPlayer != nullptr);
+            std::cout << mCurrentPlayer->GetRotation() << std::endl;
             mCurrentPlayer->SetBomb(2);
-            if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
+            assert(mPlayer1 != nullptr);
+            //if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
             mPhase = CHANGE_PLAYER;
             std::cout << "whether set_bomb" << std::endl;
             std::cout << "owner is " << mCurrentPlayer << std::endl;
@@ -211,6 +216,7 @@ void TurnManager::MovePlayer(Field *field)
 
 void TurnManager::SetRemainingBombNum(int &num)
 {
+    assert(mRemainingBombNum != nullptr);
     switch(num){
         case 0 :
             mRemainingBombNum->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/zero.png"));
@@ -234,6 +240,9 @@ void TurnManager::SetRemainingBombNum(int &num)
 
 void TurnManager::ChangePendingBombNum(int count)
 {
+    // delete ヤバそう
+    // スマポ
+    assert(mRemainingBombNum != nullptr);
     delete mRemainingBombNum;
     mRemainingBombNum = new SpriteComponent(this, 200);
     SetRemainingBombNum(count);

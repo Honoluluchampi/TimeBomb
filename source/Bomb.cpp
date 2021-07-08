@@ -27,6 +27,7 @@ Actor(game), mBombOwner(owner), mField(field)
 
 Bomb::~Bomb()
 {
+    std::cout << "Deconstruct bomb " << std::endl;
     GetGame()->RemoveSettedBomb(this);
 }
 
@@ -70,6 +71,6 @@ void Bomb::CheckBombCount()
     if(mCount <= 0)
     {
         delete this;
+        std::cout << "delete!" << std::endl;
     }
-    std::cout << "delete!" << std::endl;
 }

@@ -8,6 +8,8 @@
 #include "TBPlayer.h"
 #include "TurnManager.h"
 #include "Path.h"
+#include <iostream>
+#include "Bomb.h"
 
 Game::Game()
 :mWindow(nullptr), mRenderer(nullptr), mlsRunning(true), mUpdatingActors(false)
@@ -35,6 +37,7 @@ void Game::LoadData()
 
   // create TurnManager
   mTurnManager = new TurnManager(this, mTBPlayer1, mTBPlayer2);
+  std::cout << this << std::endl;
 }
 
 void Game::UnloadData()
@@ -89,7 +92,8 @@ void Game::RemoveSettedBomb(Bomb *bomb)
   auto iter = std::find(mSettedBombs.begin(), mSettedBombs.end(), bomb);
   if(iter != mSettedBombs.end())
   {
-    mSettedBombs.erase(iter);
+    std::iter_swap(iter, mSettedBombs.end() - 1);
+    mSettedBombs.pop_back();
   }
 }
 
@@ -186,7 +190,7 @@ void Game::ProcessInput()
 void Game::UpdateGame()
 {
   //frame lowerlimitting
-  while(!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16))
+  while(!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + LEAST_FRAME_TICKS))
   {};
   // elapsed time from the before frame (mili second to second)
   float deltaTime = (SDL_GetTicks() - mTicksCount) / 1000.0f;
@@ -194,11 +198,15 @@ void Game::UpdateGame()
   mTicksCount = SDL_GetTicks();
   
   //frame upperlimittng
-  if(deltaTime > 0.05f) deltaTime = 0.05f;
+  if(deltaTime > DELTA_TIME_UPPER_LIMIT) deltaTime = DELTA_TIME_UPPER_LIMIT;
   
   // Update all actors
   mUpdatingActors = true;
-  for(auto actor : mActors) actor -> Update(deltaTime);
+  // mActors to explicitly chosed actors
+  for(auto actor : mSettedBombs) actor -> Update(deltaTime);
+  mTurnManager->Update(deltaTime);
+  mTBPlayer1->Update(deltaTime);
+  mTBPlayer2->Update(deltaTime);
   mUpdatingActors = false;
   
   // move penidingActors to Actors
