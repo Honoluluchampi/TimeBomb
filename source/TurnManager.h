@@ -13,6 +13,7 @@ enum Phase
     DECREMENT_OPPOSITE_PLAYERS_BOMB,
     CHECK_BOMB_COUNT,
     WHETHER_SET_BOMB,
+    CHOOSE_TIME_LIMIT,
     CHANGE_PLAYER
 };
 
@@ -37,6 +38,8 @@ public:
     // remaining bomb number sprite
     void SetRemainingBombNum(int &count);
     void ChangePendingBombNum(int count);
+    
+    void ChooseTimeLimit(SDL_Event &event);
 private:
     class TBPlayer* mPlayer1;
     class TBPlayer* mPlayer2;

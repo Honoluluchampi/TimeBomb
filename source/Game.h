@@ -6,7 +6,7 @@
 #include "Math.h"
 
 const float WIDTH = 1024.0f + 100.0f;
-const float HEIGHT = 768.0f + 75.0f;
+const float HEIGHT = 768.0f;
 const float UPPER_LEFT_X = 100.0f;
 const float UPPER_LEFT_Y = 100.0f;
 const int LEAST_FRAME_TICKS = 16;
@@ -70,7 +70,7 @@ public:
   
   SDL_Texture* GetTexture(const std::string& filename);
   
-  // chapter specific
+  // game specific
   void AddField(class Field* field);
   void RemoveField(class Field* field);
   std::vector<class Field*> GetFields() {return mFields;}

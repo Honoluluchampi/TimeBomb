@@ -95,21 +95,10 @@ void TurnManager::UpdateActor(float deltaTime)
                    bomb->CheckBombCount();
                 }
             }
-            mPhase = WHETHER_SET_BOMB;
+            // player cant put bomb if pending bomb num is less than 0
+            if(mCurrentPlayer->GetPendingBombNum() <= 0) mPhase = CHANGE_PLAYER;
+            else mPhase = WHETHER_SET_BOMB;
             std::cout << "check_bomb_count" << std::endl;
-            break;
-
-        case WHETHER_SET_BOMB :
-            // judge whether set a bomb or not
-            std::cout << "before current" << std::endl;
-            assert(mCurrentPlayer != nullptr);
-            std::cout << mCurrentPlayer->GetRotation() << std::endl;
-            mCurrentPlayer->SetBomb(2);
-            assert(mPlayer1 != nullptr);
-            //if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
-            mPhase = CHANGE_PLAYER;
-            std::cout << "whether set_bomb" << std::endl;
-            std::cout << "owner is " << mCurrentPlayer << std::endl;
             break;
 
         case CHANGE_PLAYER :
@@ -125,6 +114,33 @@ void TurnManager::ActorInput(SDL_Event &event)
 {
     switch(mPhase)
     {
+        case WHETHER_SET_BOMB :
+            // decide whether set a bomb or not
+            assert(mCurrentPlayer != nullptr);
+            switch(event.type)
+            {
+                case SDL_KEYDOWN:
+                    {
+                        auto key = event.key.keysym.sym;
+                        if(key == SDLK_y)
+                        {
+                            mPhase = CHOOSE_TIME_LIMIT;
+                        }
+                        else if (key == SDLK_n)
+                        {
+                            mPhase = CHANGE_PLAYER;
+                        }
+                    }
+                    break;
+                default :
+                    break;
+            }
+            std::cout << "whether set_bomb" << std::endl;
+            break;
+
+        case CHOOSE_TIME_LIMIT :
+            ChooseTimeLimit(event);
+            break;
         case CHOOSE_AND_MOVE_FIELD :
             ChooseField(event);
             break;
@@ -240,12 +256,49 @@ void TurnManager::SetRemainingBombNum(int &num)
 
 void TurnManager::ChangePendingBombNum(int count)
 {
-    // delete ヤバそう
-    // スマポ
     assert(mRemainingBombNum != nullptr);
     delete mRemainingBombNum;
     mRemainingBombNum = new SpriteComponent(this, 200);
     SetRemainingBombNum(count);
     SetPosition(PENDING_BOMB_NUM_POSITION);
     SetRotation(0);
+}
+
+void TurnManager::ChooseTimeLimit(SDL_Event &event)
+{
+    switch(event.type)
+    {
+        case SDL_KEYDOWN:
+            {
+                auto key = event.key.keysym.sym;
+                if(key == SDLK_2)
+                {
+                    mCurrentPlayer->SetBomb(2);
+                    if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
+                    mPhase = CHANGE_PLAYER;
+                    break;
+                }
+                if(key == SDLK_3)
+                {
+                    mCurrentPlayer->SetBomb(3);
+                    if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
+                    mPhase = CHANGE_PLAYER;
+                    break;
+                }
+                if(key == SDLK_4)
+                {
+                    mCurrentPlayer->SetBomb(3);
+                    if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
+                    mPhase = CHANGE_PLAYER;
+                    break;
+                }
+                if(key == SDLK_c)
+                {
+                    mPhase = WHETHER_SET_BOMB;
+                }
+            }
+            break;
+        default:
+            break;
+    }
 }
