@@ -115,8 +115,10 @@ void TurnManager::UpdateActor(float deltaTime)
             }
             if (mOppositePlayer->GetHitPoint()<=0)
             {
-                delete mOppositePlayer;
+                if(mTurn) delete mPlayer1;
+                else delete mPlayer2;
                 mPhase = ENDING;
+                break;
             }
             // player cant put bomb if pending bomb num is less than 0
             if(mCurrentPlayer->GetPendingBombNum() <= 0) mPhase = CHANGE_PLAYER;
@@ -132,6 +134,7 @@ void TurnManager::UpdateActor(float deltaTime)
             break;
         
         case ENDING :
+            while(1){}
             break;
 
         default :

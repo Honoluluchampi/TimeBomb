@@ -205,8 +205,8 @@ void Game::UpdateGame()
   // mActors to explicitly chosed actors
   for(auto actor : mSettedBombs) actor -> Update(deltaTime);
   mTurnManager->Update(deltaTime);
-  mTBPlayer1->Update(deltaTime);
-  mTBPlayer2->Update(deltaTime);
+  if(mTBPlayer1 != nullptr) mTBPlayer1->Update(deltaTime);
+  if(mTBPlayer2 != nullptr) mTBPlayer2->Update(deltaTime);
   mUpdatingActors = false;
   
   // move penidingActors to Actors
