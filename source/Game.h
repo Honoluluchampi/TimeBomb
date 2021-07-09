@@ -12,6 +12,7 @@ const float UPPER_LEFT_Y = 100.0f;
 const int LEAST_FRAME_TICKS = 16;
 const float DELTA_TIME_UPPER_LIMIT = 0.05f;
 const int PLAYER_STEP = 2;
+const int DISTRIBUTE_BOMB_TURN = 3;
 //const float PATH_SCALE = 0.001f;
 //const Vector2 PATH_SLIDE = Vector2(0.0f, 0.0f);
 const int MAX_PENDING_BOMB_NUM = 3;
@@ -84,6 +85,8 @@ public:
   void RemoveSettedBomb(class Bomb* bomb);
   std::vector<class Bomb*> GetSettedBombs() {return mSettedBombs;}
 
+  void SetIsRunning(bool flag){mIsRunning = flag;}
+
 private:
   // Helper functions for RunLoop()
   void ProcessInput();
@@ -103,7 +106,7 @@ private:
   SDL_Renderer *mRenderer; // graphic organizer
   
   // continue instractor
-  bool mlsRunning;
+  bool mIsRunning;
   // elapsed time from SDL_init
   Uint32 mTicksCount;
   

@@ -12,7 +12,7 @@
 #include "Bomb.h"
 
 Game::Game()
-:mWindow(nullptr), mRenderer(nullptr), mlsRunning(true), mUpdatingActors(false)
+:mWindow(nullptr), mRenderer(nullptr), mIsRunning(true), mUpdatingActors(false)
 {
 }
 
@@ -151,7 +151,7 @@ bool Game::Initialize()
 
 void Game::RunLoop()
 {
-  while(mlsRunning)
+  while(mIsRunning)
   {
     ProcessInput();
     UpdateGame();
@@ -167,7 +167,7 @@ void Game::ProcessInput()
     switch(event.type) // includes the type of event.
     {
       case SDL_QUIT:
-        mlsRunning = false;
+        mIsRunning = false;
         break;
       
       default :
@@ -183,7 +183,7 @@ void Game::ProcessInput()
   const Uint8* state = SDL_GetKeyboardState(NULL);
   if(state[SDL_SCANCODE_ESCAPE])
   {
-    mlsRunning = false;
+    mIsRunning = false;
   }
 }
 

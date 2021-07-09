@@ -14,7 +14,7 @@
 #include <cassert>
 
 TurnManager::TurnManager(Game *game, TBPlayer *player1, TBPlayer *player2) : 
-Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_CANDIDATE_FIELDS)
+Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_CANDIDATE_FIELDS), mDistributeBomb(1)
 {
     // player1 plays first
     mCurrentPlayer = mPlayer1;
@@ -37,6 +37,16 @@ void TurnManager::UpdateActor(float deltaTime)
 {
     switch(mPhase)
     {
+        case DISTRIBUTE_BOMB :
+            if(mDistributeBomb == 0)
+            {
+                mCurrentPlayer->GetBomb();
+                if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
+            }
+            if(mCurrentPlayer == mPlayer2) mDistributeBomb == DISTRIBUTE_BOMB_TURN - 1 ? mDistributeBomb = 0 : mDistributeBomb++;
+            mPhase = GET_CANDIDATE_FIELDS;
+            break;
+
         case GET_CANDIDATE_FIELDS :
             mCandFields = GetCandFields(GetGame()->GetFields(), mCurrentPlayer->GetCurrentField());
             mPhase = CREATE_CURSOR;
@@ -129,12 +139,8 @@ void TurnManager::UpdateActor(float deltaTime)
         case CHANGE_PLAYER :
             std::swap(mCurrentPlayer, mOppositePlayer);
             mTurn = !mTurn;
-            mPhase = GET_CANDIDATE_FIELDS;
+            mPhase = DISTRIBUTE_BOMB;
             std::cout << "change_plyaer" << std::endl;
-            break;
-        
-        case ENDING :
-            while(1){}
             break;
 
         default :
@@ -175,6 +181,10 @@ void TurnManager::ActorInput(SDL_Event &event)
             break;
         case CHOOSE_AND_MOVE_FIELD :
             ChooseField(event);
+            break;
+
+        case ENDING :
+            GetGame()->SetIsRunning(false);
             break;
     }
 }
@@ -340,7 +350,7 @@ void TurnManager::Explosion(Bomb *bomb)
     // bomb field
     Field* bf = bomb->GetBombField();
     // target field
-    Field* tf = mOppositePlayer->GetCurrentField();
+    Field* tf = mCurrentPlayer->GetCurrentField();
     for(auto path : GetGame()->GetPaths())
     {
         if(path->GetNord1() == bf || path->GetNord2() == bf)
@@ -348,7 +358,7 @@ void TurnManager::Explosion(Bomb *bomb)
             // set explosion animation
             if(path->GetNord1() == tf || path->GetNord2() == tf)
             {
-                mOppositePlayer->DecrementHitPoint();
+                mCurrentPlayer->DecrementHitPoint();
             }
         }
     }

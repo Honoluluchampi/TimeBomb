@@ -4,6 +4,7 @@
 
 enum Phase
 {
+    DISTRIBUTE_BOMB,
     GET_CANDIDATE_FIELDS,
     CREATE_CURSOR,
     CREATE_CAND_FIELD_SPRITE,
@@ -54,4 +55,5 @@ private:
 
     int mPhase;
     bool mTurn; // player1:true, player2:false
+    int mDistributeBomb;
 };
