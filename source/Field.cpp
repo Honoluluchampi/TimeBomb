@@ -17,8 +17,6 @@ Field::Field(Game *game, float x, float y) : Actor(game)
     sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/field.png"));
 
     game -> AddField(this);
-    // floating move
-    //void Field::UpdateActor(float deltaTime)
 }
 
 Field::~Field()

@@ -7,7 +7,7 @@
 #include <iostream>
 
 TBPlayer::TBPlayer(Game *game, Field *ip, bool player, const int &bombnum) : 
-Actor(game), mCurrentField(ip)
+Actor(game), mCurrentField(ip), mHitPoint(INITIAL_HIT_POINT)
 {
     SpriteComponent *sc = new SpriteComponent(this, 100);
     if(player) sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/blue_ball.png"));
@@ -47,4 +47,14 @@ void TBPlayer::SetBomb(int count)
     GetGame()->AddSettedBomb(bomb);
     std::cout << "before add" << std::endl;
     std::cout << "after add" << std::endl;
+}
+
+bool TBPlayer::CheckHitPoint()
+{
+    if(mHitPoint <= 0)
+    {
+        delete this;
+        return true;
+    }
+    return false;
 }

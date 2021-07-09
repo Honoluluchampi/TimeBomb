@@ -6,7 +6,7 @@
 #include <iostream>
 
 Bomb::Bomb(Game *game, TBPlayer *owner, Field *field, int &count) : 
-Actor(game), mBombOwner(owner), mField(field)
+Actor(game), mReadyToExplode(false), mBombOwner(owner), mField(field)
 {
     // bomb sprite
     SpriteComponent *sc = new SpriteComponent(this, 130);
@@ -27,6 +27,8 @@ Actor(game), mBombOwner(owner), mField(field)
 
 Bomb::~Bomb()
 {
+    // explosion
+    
     std::cout << "Deconstruct bomb " << std::endl;
     GetGame()->RemoveSettedBomb(this);
 }
@@ -65,12 +67,9 @@ void Bomb::DecrementCount()
     ChangeCountSprite();
 }
 
-void Bomb::CheckBombCount()
+bool Bomb::CheckBombCount()
 {
-    std::cout << "delete?" << std::endl;
-    if(mCount <= 0)
-    {
-        delete this;
-        std::cout << "delete!" << std::endl;
-    }
+    // delete by turn manager
+    if(mCount <= 0) return true;
+    else return false;
 }

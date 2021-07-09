@@ -92,8 +92,31 @@ void TurnManager::UpdateActor(float deltaTime)
             {
                 if(bomb->GetBombOwner() == mOppositePlayer)
                 {
-                   bomb->CheckBombCount();
+                   if(bomb->CheckBombCount())
+                   {
+                       // these bombs will explode in next phase
+                       bomb->SetReadyToExplode();
+                       // decrement hit-point in this phase
+                       Explosion(bomb);
+                       // bombs will be deleted in next phase
+                   }
                 }
+            }
+            mPhase = EXPLOSION_ANIM;
+
+        case EXPLOSION_ANIM :
+            for (auto bomb : GetGame()->GetSettedBombs())
+            {
+                if(bomb->GetReadyToExplode())
+                {
+                    // anime
+                    delete bomb;
+                }
+            }
+            if (mOppositePlayer->GetHitPoint()<=0)
+            {
+                delete mOppositePlayer;
+                mPhase = ENDING;
             }
             // player cant put bomb if pending bomb num is less than 0
             if(mCurrentPlayer->GetPendingBombNum() <= 0) mPhase = CHANGE_PLAYER;
@@ -106,6 +129,12 @@ void TurnManager::UpdateActor(float deltaTime)
             mTurn = !mTurn;
             mPhase = GET_CANDIDATE_FIELDS;
             std::cout << "change_plyaer" << std::endl;
+            break;
+        
+        case ENDING :
+            break;
+
+        default :
             break;
     }
 }
@@ -287,7 +316,7 @@ void TurnManager::ChooseTimeLimit(SDL_Event &event)
                 }
                 if(key == SDLK_4)
                 {
-                    mCurrentPlayer->SetBomb(3);
+                    mCurrentPlayer->SetBomb(4);
                     if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
                     mPhase = CHANGE_PLAYER;
                     break;
@@ -300,5 +329,24 @@ void TurnManager::ChooseTimeLimit(SDL_Event &event)
             break;
         default:
             break;
+    }
+}
+
+void TurnManager::Explosion(Bomb *bomb)
+{
+    // bomb field
+    Field* bf = bomb->GetBombField();
+    // target field
+    Field* tf = mOppositePlayer->GetCurrentField();
+    for(auto path : GetGame()->GetPaths())
+    {
+        if(path->GetNord1() == bf || path->GetNord2() == bf)
+        {
+            // set explosion animation
+            if(path->GetNord1() == tf || path->GetNord2() == tf)
+            {
+                mOppositePlayer->DecrementHitPoint();
+            }
+        }
     }
 }

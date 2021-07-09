@@ -14,8 +14,9 @@ const float DELTA_TIME_UPPER_LIMIT = 0.05f;
 const int PLAYER_STEP = 2;
 //const float PATH_SCALE = 0.001f;
 //const Vector2 PATH_SLIDE = Vector2(0.0f, 0.0f);
-const int MAX_PENDING_BOMB_NUM = 2;
-const int INITIAL_PENDING_BOMB_NUM = 2;
+const int MAX_PENDING_BOMB_NUM = 3;
+const int INITIAL_PENDING_BOMB_NUM = 3;
+const int INITIAL_HIT_POINT = 2;
 const int INITIAL_FIELD_NUM = 16;
 const Vector2 FIELD_POSITION[] = {
   Vector2(WIDTH/7, HEIGHT/7),

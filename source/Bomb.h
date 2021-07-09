@@ -9,14 +9,18 @@ public:
 
     // change count function
     class TBPlayer* GetBombOwner(){return mBombOwner;}
+    class Field* GetBombField(){return mField;}
     void SetCount(int &count){mCount = count;}
     void SetCountSprite();
+    void SetReadyToExplode(){mReadyToExplode = true;}
+    bool GetReadyToExplode(){return mReadyToExplode;}
     void ChangeCountSprite();
     void DecrementCount();
-    void CheckBombCount();
+    bool CheckBombCount();
     
 private:
     int mCount;
+    bool mReadyToExplode;
     class TBPlayer* mBombOwner;
     class SpriteComponent* mCountSprite;
     class Field* mField;

@@ -12,9 +12,11 @@ enum Phase
     DELETE_CAND_FIELD_SPITE,
     DECREMENT_OPPOSITE_PLAYERS_BOMB,
     CHECK_BOMB_COUNT,
+    EXPLOSION_ANIM,
     WHETHER_SET_BOMB,
     CHOOSE_TIME_LIMIT,
-    CHANGE_PLAYER
+    CHANGE_PLAYER,
+    ENDING
 };
 
 class TurnManager : public Actor
@@ -35,7 +37,8 @@ public:
     std::vector<class Field*> GetCandFields(std::vector<class Field*>, class Field*);
     void ChooseField(SDL_Event &event);
     void MovePlayer(class Field* field);
-    // remaining bomb number sprite
+    void Explosion(class Bomb* bomb);
+   // remaining bomb number sprite
     void SetRemainingBombNum(int &count);
     void ChangePendingBombNum(int count);
     

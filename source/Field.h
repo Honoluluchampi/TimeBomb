@@ -11,7 +11,7 @@ public:
     // floating move ?
     void CreateCandSprite(class Game *game, bool turn);
     void DeleteCandSprite();
-    
+
 private:
     // edges form this field
     //std::vector<class Path> mPaths;
