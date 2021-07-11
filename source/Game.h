@@ -18,7 +18,7 @@ const int DISTRIBUTE_BOMB_TURN = 3;
 const int MAX_PENDING_BOMB_NUM = 3;
 const int INITIAL_PENDING_BOMB_NUM = 3;
 const float EXPLOSION_ANIM_FPS = 16.0f;
-const int INITIAL_HIT_POINT = 2;
+const int INITIAL_HIT_POINT = 3;
 const int INITIAL_FIELD_NUM = 16;
 const Vector2 FIELD_POSITION[] = {
   Vector2(WIDTH/7, HEIGHT/7),

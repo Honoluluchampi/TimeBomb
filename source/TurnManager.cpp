@@ -148,10 +148,8 @@ void TurnManager::UpdateActor(float deltaTime)
             }
 
         case CHECK_PLAYER_HIT_POINT :
-            if (mOppositePlayer->GetHitPoint()<=0)
+            if (mCurrentPlayer->GetHitPoint()<=0)
             {
-                if(mTurn) delete mPlayer1;
-                else delete mPlayer2;
                 mPhase = ENDING;
                 break;
             }
@@ -186,6 +184,7 @@ void TurnManager::ActorInput(SDL_Event &event)
             break;
 
         case ENDING :
+            std::cout << "ending" << std::endl;
             GetGame()->SetIsRunning(false);
             break;
     }
