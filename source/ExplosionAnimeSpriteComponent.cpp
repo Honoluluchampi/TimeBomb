@@ -3,9 +3,10 @@
 #include "Actor.h"
 #include "Game.h"
 #include "TurnManager.h"
+#include <iostream>
 
 ExplosionAnimSpriteComponent::ExplosionAnimSpriteComponent(Actor *owner, int drawOrder, bool isBlue, class TurnManager* tm)
-: SpriteComponent(owner, drawOrder), mTurnManager(tm)
+: SpriteComponent(owner, drawOrder), mTurnManager(tm), mAnimFPS(24.0f)
 {
     if(isBlue){
         std::vector<SDL_Texture*> anims = {
@@ -51,13 +52,8 @@ void ExplosionAnimSpriteComponent::Update(float deltaTime)
     // disposable anime sprite
     if(mCurrFrame >= mAnimTextures.size())
     {
-    delete this;
-    }
-    
-    // if necessary, rewind the current frame
-    while (mCurrFrame >= mAnimTextures.size())
-    {
-      mCurrFrame -= mAnimTextures.size();
+        delete this;
+        return;
     }
     
     // set the current texture

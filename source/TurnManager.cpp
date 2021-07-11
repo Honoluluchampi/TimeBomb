@@ -129,17 +129,13 @@ void TurnManager::UpdateActor(float deltaTime)
             break;
 
         case EXPLOSION_ANIM :
-            if(mExplosionAnim.size()!= 0)
-            {
-                std::cout << mExplosionAnim.size() << std::endl;
-                break;
-            }
+            if(mExplosionAnim.size()!= 0) break;
             else
             {
                 mPhase = CHECK_PLAYER_HIT_POINT;
                 break;
             }
-            
+
         case CHECK_PLAYER_HIT_POINT :
             if (mOppositePlayer->GetHitPoint()<=0)
             {
