@@ -12,6 +12,7 @@
 #include <iostream>
 #include "SpriteComponent.h"
 #include <cassert>
+#include "ExplosionAnimeSpriteComponent.h"
 
 TurnManager::TurnManager(Game *game, TBPlayer *player1, TBPlayer *player2) : 
 Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_CANDIDATE_FIELDS), mDistributeBomb(1)
@@ -112,17 +113,34 @@ void TurnManager::UpdateActor(float deltaTime)
                    }
                 }
             }
-            mPhase = EXPLOSION_ANIM;
-
-        case EXPLOSION_ANIM :
+            
+            // create explosion sprite 
             for (auto bomb : GetGame()->GetSettedBombs())
             {
                 if(bomb->GetReadyToExplode())
                 {
-                    // anime
+                    ExplosionAnimSpriteComponent *ea = new ExplosionAnimSpriteComponent(bomb->GetBombField(), 150, !mTurn, this);
+                    std::cout << "explosion anime set" << std::endl;
+                    AddExplosionAnim(ea);
                     delete bomb;
                 }
             }
+            mPhase = EXPLOSION_ANIM;
+            break;
+
+        case EXPLOSION_ANIM :
+            if(mExplosionAnim.size()!= 0)
+            {
+                std::cout << mExplosionAnim.size() << std::endl;
+                break;
+            }
+            else
+            {
+                mPhase = CHECK_PLAYER_HIT_POINT;
+                break;
+            }
+            
+        case CHECK_PLAYER_HIT_POINT :
             if (mOppositePlayer->GetHitPoint()<=0)
             {
                 if(mTurn) delete mPlayer1;
@@ -361,5 +379,19 @@ void TurnManager::Explosion(Bomb *bomb)
                 mCurrentPlayer->DecrementHitPoint();
             }
         }
+    }
+}
+
+void TurnManager::AddExplosionAnim(ExplosionAnimSpriteComponent *ea)
+{
+    mExplosionAnim.push_back(ea);
+}
+
+void TurnManager::RemoveExplosionAnim(ExplosionAnimSpriteComponent* ea)
+{
+    auto iter = std::find(mExplosionAnim.begin(), mExplosionAnim.end(), ea);
+    if(iter != mExplosionAnim.end())
+    {
+        mExplosionAnim.erase(iter);
     }
 }

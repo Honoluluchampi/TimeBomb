@@ -123,4 +123,5 @@ private:
   std::vector<class Field*> mFields;
   std::vector<class Path*> mPaths;
   std::vector<class Bomb*> mSettedBombs;
+  std::vector<class AnimeSpriteComponent*> mExplosionAnime;
 };

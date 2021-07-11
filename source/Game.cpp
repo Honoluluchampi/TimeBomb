@@ -207,6 +207,7 @@ void Game::UpdateGame()
   mTurnManager->Update(deltaTime);
   if(mTBPlayer1 != nullptr) mTBPlayer1->Update(deltaTime);
   if(mTBPlayer2 != nullptr) mTBPlayer2->Update(deltaTime);
+  for(auto field : mFields) field->Update(deltaTime);
   mUpdatingActors = false;
   
   // move penidingActors to Actors

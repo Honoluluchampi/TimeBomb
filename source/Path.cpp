@@ -15,7 +15,7 @@ Path::Path(Game *game, Field *nord1, Field *nord2)
     float rotation;
     if(std::abs(mNord1->GetPosition().x - mNord2->GetPosition().x) < 0.001f)
     {
-        rotation = -M_PI/2.0f;
+        rotation = M_PI/2.0f;
     }
     else rotation = std::atan((mNord2->GetPosition().y-mNord1->GetPosition().y)/(mNord2->GetPosition().x - mNord1->GetPosition().x));
     SetPosition(pos);

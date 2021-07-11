@@ -14,6 +14,7 @@ enum Phase
     DECREMENT_OPPOSITE_PLAYERS_BOMB,
     CHECK_BOMB_COUNT,
     EXPLOSION_ANIM,
+    CHECK_PLAYER_HIT_POINT,
     WHETHER_SET_BOMB,
     CHOOSE_TIME_LIMIT,
     CHANGE_PLAYER,
@@ -42,8 +43,10 @@ public:
    // remaining bomb number sprite
     void SetRemainingBombNum(int &count);
     void ChangePendingBombNum(int count);
-    
     void ChooseTimeLimit(SDL_Event &event);
+
+    void AddExplosionAnim(class ExplosionAnimSpriteComponent *ea);
+    void RemoveExplosionAnim(class ExplosionAnimSpriteComponent* ea);
 private:
     class TBPlayer* mPlayer1;
     class TBPlayer* mPlayer2;
@@ -52,6 +55,7 @@ private:
     class Cursor* mCursor;
     std::vector<class Field*> mCandFields;
     class SpriteComponent* mRemainingBombNum;
+    std::vector<class ExplosionAnimSpriteComponent*> mExplosionAnim;
 
     int mPhase;
     bool mTurn; // player1:true, player2:false

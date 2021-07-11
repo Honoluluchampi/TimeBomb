@@ -1,7 +1,7 @@
 #include "AnimeSpriteComponent.h"
 
-AnimSpriteComponent::AnimSpriteComponent(Actor* owner, int drawOrder)
-  :SpriteComponent(owner, drawOrder), mCurrFrame(0.0f), mAnimFPS(24.0f)
+AnimSpriteComponent::AnimSpriteComponent(Actor* owner, int drawOrder, bool disposable)
+  :SpriteComponent(owner, drawOrder), mCurrFrame(0.0f), mAnimFPS(24.0f), mDisposable(disposable)
 {
 }
 
@@ -13,6 +13,15 @@ void AnimSpriteComponent::Update(float deltaTime)
   {
     // update current frame considering framerate and deltatime
     mCurrFrame += mAnimFPS * deltaTime;
+
+    // disposable anime sprite
+    if(mDisposable)
+    {
+      if(mCurrFrame >= mAnimTextures.size())
+      {
+        delete this;
+      }
+    }
     
     // if necessary, rewind the current frame
     while (mCurrFrame >= mAnimTextures.size())

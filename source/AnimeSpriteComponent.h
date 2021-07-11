@@ -5,7 +5,7 @@
 class AnimSpriteComponent:public SpriteComponent
 {
 public:
-  AnimSpriteComponent(class Actor* owner, int drawOrder = 100);
+  AnimSpriteComponent(class Actor* owner, int drawOrder = 100, bool disposable = false);
   // update every frame (override from component)
   void Update(float deltaTime) override;
   // set the texture
@@ -20,4 +20,5 @@ private:
   // the frame being displayed now
   float mCurrFrame;
   float mAnimFPS; // We can controll FPS !
+  bool mDisposable;
 };

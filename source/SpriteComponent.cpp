@@ -1,6 +1,7 @@
 #include "SpriteComponent.h"
 #include "Actor.h"
 #include "Game.h"
+#include <iostream>
 
 const int TEXWIDTH = 0;
 const int TEXHEIGHT = 756;
@@ -13,6 +14,7 @@ SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
 
 SpriteComponent::~SpriteComponent()
 {
+  std::cout << "remove sprite comp" << std::endl;
   mOwner->GetGame()->RemoveSprite(this);
 };
 
