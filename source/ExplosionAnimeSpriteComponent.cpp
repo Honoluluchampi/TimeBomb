@@ -6,7 +6,7 @@
 #include <iostream>
 
 ExplosionAnimSpriteComponent::ExplosionAnimSpriteComponent(Actor *owner, int drawOrder, bool isBlue, class TurnManager* tm)
-: SpriteComponent(owner, drawOrder), mTurnManager(tm), mAnimFPS(24.0f)
+: SpriteComponent(owner, drawOrder), mTurnManager(tm), mAnimFPS(EXPLOSION_ANIM_FPS)
 {
     if(isBlue){
         std::vector<SDL_Texture*> anims = {

@@ -120,8 +120,21 @@ void TurnManager::UpdateActor(float deltaTime)
                 if(bomb->GetReadyToExplode())
                 {
                     ExplosionAnimSpriteComponent *ea = new ExplosionAnimSpriteComponent(bomb->GetBombField(), 150, !mTurn, this);
-                    std::cout << "explosion anime set" << std::endl;
                     AddExplosionAnim(ea);
+                    // neighber s anime
+                    for(auto path : GetGame()->GetPaths())
+                    {
+                        if(path->GetNord1() == bomb->GetBombField())
+                        {
+                            ExplosionAnimSpriteComponent *ea = new ExplosionAnimSpriteComponent(path->GetNord2(), 150, !mTurn, this);
+                            AddExplosionAnim(ea);
+                        }
+                        else if(path->GetNord2() == bomb->GetBombField())
+                        {
+                            ExplosionAnimSpriteComponent *ea = new ExplosionAnimSpriteComponent(path->GetNord1(), 150, !mTurn, this);
+                            AddExplosionAnim(ea);
+                        }
+                    }
                     delete bomb;
                 }
             }
