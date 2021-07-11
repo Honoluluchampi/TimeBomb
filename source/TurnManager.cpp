@@ -362,13 +362,9 @@ void TurnManager::Explosion(Bomb *bomb)
     Field* tf = mCurrentPlayer->GetCurrentField();
     for(auto path : GetGame()->GetPaths())
     {
-        if(path->GetNord1() == bf || path->GetNord2() == bf)
+        if((path->GetNord1() == bf && path->GetNord2() == tf) || (path->GetNord2() == bf && path->GetNord1() == tf))
         {
-            // set explosion animation
-            if(path->GetNord1() == tf || path->GetNord2() == tf)
-            {
-                mCurrentPlayer->DecrementHitPoint();
-            }
+            mCurrentPlayer->DecrementHitPoint();
         }
     }
 }
