@@ -13,6 +13,7 @@
 #include "SpriteComponent.h"
 #include <cassert>
 #include "ExplosionAnimeSpriteComponent.h"
+#include "Actor.h"
 
 TurnManager::TurnManager(Game *game, TBPlayer *player1, TBPlayer *player2) : 
 Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_CANDIDATE_FIELDS), mDistributeBomb(1)
@@ -119,20 +120,17 @@ void TurnManager::UpdateActor(float deltaTime)
             {
                 if(bomb->GetReadyToExplode())
                 {
-                    ExplosionAnimSpriteComponent *ea = new ExplosionAnimSpriteComponent(bomb->GetBombField(), 150, !mTurn, this);
-                    AddExplosionAnim(ea);
+                    CreateExplosionAnim(bomb->GetBombField());
                     // neighber s anime
                     for(auto path : GetGame()->GetPaths())
                     {
-                        if(path->GetNord1() == bomb->GetBombField())
+                        if(path->GetNord1() == bomb->GetBombField()) 
                         {
-                            ExplosionAnimSpriteComponent *ea = new ExplosionAnimSpriteComponent(path->GetNord2(), 150, !mTurn, this);
-                            AddExplosionAnim(ea);
+                            CreateExplosionAnim(path->GetNord2());
                         }
                         else if(path->GetNord2() == bomb->GetBombField())
                         {
-                            ExplosionAnimSpriteComponent *ea = new ExplosionAnimSpriteComponent(path->GetNord1(), 150, !mTurn, this);
-                            AddExplosionAnim(ea);
+                            CreateExplosionAnim(path->GetNord1());
                         }
                     }
                     delete bomb;
@@ -179,35 +177,12 @@ void TurnManager::ActorInput(SDL_Event &event)
 {
     switch(mPhase)
     {
-        case WHETHER_SET_BOMB :
-            // decide whether set a bomb or not
-            assert(mCurrentPlayer != nullptr);
-            switch(event.type)
-            {
-                case SDL_KEYDOWN:
-                    {
-                        auto key = event.key.keysym.sym;
-                        if(key == SDLK_y)
-                        {
-                            mPhase = CHOOSE_TIME_LIMIT;
-                        }
-                        else if (key == SDLK_n)
-                        {
-                            mPhase = CHANGE_PLAYER;
-                        }
-                    }
-                    break;
-                default :
-                    break;
-            }
-            std::cout << "whether set_bomb" << std::endl;
-            break;
-
-        case CHOOSE_TIME_LIMIT :
-            ChooseTimeLimit(event);
-            break;
         case CHOOSE_AND_MOVE_FIELD :
             ChooseField(event);
+            break;
+
+        case WHETHER_SET_BOMB :
+            ChooseWhetherSetBomb(event);
             break;
 
         case ENDING :
@@ -333,13 +308,20 @@ void TurnManager::ChangePendingBombNum(int count)
     SetRotation(0);
 }
 
-void TurnManager::ChooseTimeLimit(SDL_Event &event)
+void TurnManager::ChooseWhetherSetBomb(SDL_Event &event)
 {
     switch(event.type)
     {
         case SDL_KEYDOWN:
             {
                 auto key = event.key.keysym.sym;
+                if(key == SDLK_1)
+                {
+                    mCurrentPlayer->SetBomb(1);
+                    if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
+                    mPhase = CHANGE_PLAYER;
+                    break;
+                }
                 if(key == SDLK_2)
                 {
                     mCurrentPlayer->SetBomb(2);
@@ -361,9 +343,10 @@ void TurnManager::ChooseTimeLimit(SDL_Event &event)
                     mPhase = CHANGE_PLAYER;
                     break;
                 }
-                if(key == SDLK_c)
+                if(key == SDLK_n)
                 {
-                    mPhase = WHETHER_SET_BOMB;
+                    mPhase = CHANGE_PLAYER;
+                    break;
                 }
             }
             break;
@@ -389,6 +372,12 @@ void TurnManager::Explosion(Bomb *bomb)
             }
         }
     }
+}
+
+void TurnManager::CreateExplosionAnim(Actor *owner)
+{
+    ExplosionAnimSpriteComponent* ea = new ExplosionAnimSpriteComponent(owner, 150, !mTurn, this);
+    AddExplosionAnim(ea);
 }
 
 void TurnManager::AddExplosionAnim(ExplosionAnimSpriteComponent *ea)

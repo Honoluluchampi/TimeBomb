@@ -43,8 +43,9 @@ public:
    // remaining bomb number sprite
     void SetRemainingBombNum(int &count);
     void ChangePendingBombNum(int count);
-    void ChooseTimeLimit(SDL_Event &event);
+    void ChooseWhetherSetBomb(SDL_Event &event);
 
+    void CreateExplosionAnim(class Actor* owner);
     void AddExplosionAnim(class ExplosionAnimSpriteComponent *ea);
     void RemoveExplosionAnim(class ExplosionAnimSpriteComponent* ea);
 private:
