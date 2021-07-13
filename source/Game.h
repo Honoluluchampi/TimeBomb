@@ -13,15 +13,16 @@ const int LEAST_FRAME_TICKS = 16;
 const float DELTA_TIME_UPPER_LIMIT = 0.05f;
 const int PLAYER_STEP = 2;
 const int DISTRIBUTE_BOMB_TURN = 3;
-//const float PATH_SCALE = 0.001f;
-//const Vector2 PATH_SLIDE = Vector2(0.0f, 0.0f);
+const float PATH_SCALE_X = 0.006f;
+const float PATH_SCALE_Y = 0.55f;
+const Vector2 PATH_SLIDE = Vector2(20.0f, 65.0f);
 const int MAX_PENDING_BOMB_NUM = 3;
 const int INITIAL_PENDING_BOMB_NUM = 3;
 const float EXPLOSION_ANIM_FPS = 16.0f;
 const int INITIAL_HIT_POINT = 3;
 const int INITIAL_FIELD_NUM = 16;
 const Vector2 FIELD_POSITION[] = {
-  Vector2(WIDTH/7, HEIGHT/7),
+  Vector2(WIDTH/7, HEIGHT/5),
   Vector2(WIDTH*1/3, HEIGHT*1/4),
   Vector2(WIDTH*4/7, HEIGHT*2/9),
   Vector2(WIDTH*3/4, HEIGHT*1/7),
@@ -45,13 +46,13 @@ const std::pair<int,int> PATH_EDGES[] = {
 const int INITIAL_FIELD_FOR_1 = 0;
 const int INITIAL_FIELD_FOR_2 = 15;
 
-const Vector2 PENDING_BOMB_STRING_POSITION = Vector2(WIDTH * 7/9, HEIGHT * 1/9);
-const Vector2 PENDING_BOMB_NUM_POSITION1 = Vector2(WIDTH * 10/12 + 10, HEIGHT * 1/9);
-const Vector2 PENDING_BOMB_NUM_POSITION2 = Vector2(WIDTH * 10/11, HEIGHT * 1/9);
+const Vector2 PENDING_BOMB_STRING_POSITION = Vector2(WIDTH * 7/9, HEIGHT * 1/11);
+const Vector2 PENDING_BOMB_NUM_POSITION1 = Vector2(WIDTH * 10/12 + 10, HEIGHT * 1/11);
+const Vector2 PENDING_BOMB_NUM_POSITION2 = Vector2(WIDTH * 10/11, HEIGHT * 1/11);
 
-const Vector2 HIT_POINT_STRING_POSITION = Vector2(WIDTH * 2/9, HEIGHT * 1/9);
-const Vector2 HIT_POINT_POSITION1 = Vector2(WIDTH * 2/7, HEIGHT * 1/9);
-const Vector2 HIT_POINT_POSITION2 = Vector2(WIDTH * 5/14, HEIGHT * 1/9);
+const Vector2 HIT_POINT_STRING_POSITION = Vector2(WIDTH * 2/9, HEIGHT * 1/11);
+const Vector2 HIT_POINT_POSITION1 = Vector2(WIDTH * 2/7, HEIGHT * 1/11);
+const Vector2 HIT_POINT_POSITION2 = Vector2(WIDTH * 5/14, HEIGHT * 1/11);
 
 const float STRING_SCALE = 0.2;
 

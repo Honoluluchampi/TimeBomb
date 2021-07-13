@@ -10,7 +10,6 @@ Component::Component(Actor* owner, int updateOrder)
 
 Component::~Component()
 {
-  std::cout << "remove comp" << std::endl;
   mOwner -> RemoveComponent(this);
 }
 

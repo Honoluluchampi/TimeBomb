@@ -19,10 +19,11 @@ public:
   
   virtual void SetTexture(SDL_Texture* texture);
   void SetPosition(const Vector2 position){mPosition = position;}
-  void SetScale(const float scale){ mScale = scale; }
+  void SetScale(const float scale){ mScaleX = scale; mScaleY = scale;}
+  void SetScale(const float scalex, const float scaley){mScaleX = scalex; mScaleY = scaley;}
   
   Vector2 GetPosition() const { return mPosition; }
-  float GetScale() const { return mScale; }
+  float GetScale() const { return mScaleX; }
   int GetDrawOrder() const { return mDrawOrder; }
   int GetTexHeight() const { return mTexHeight; }
   int GetTexWidth() const { return mTexWidth; }
@@ -37,5 +38,6 @@ protected:
   bool mManualPosition;
   bool mManualScale;
   Vector2 mPosition;
-  float mScale;
+  float mScaleX;
+  float mScaleY;
 };

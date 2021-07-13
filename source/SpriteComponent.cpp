@@ -15,7 +15,6 @@ mDrawOrder(drawOrder),mManualPosition(isManualPosition),mManualScale(isManualSca
 
 SpriteComponent::~SpriteComponent()
 {
-  std::cout << "remove sprite comp" << std::endl;
   mOwner->GetGame()->RemoveSprite(this);
 };
 
@@ -31,8 +30,8 @@ void SpriteComponent::Draw(SDL_Renderer* renderer)
     }
     else
     {
-      r.w = static_cast<int>(mTexWidth * mScale);
-      r.h = static_cast<int>(mTexHeight * mScale);
+      r.w = static_cast<int>(mTexWidth * mScaleX);
+      r.h = static_cast<int>(mTexHeight * mScaleY);
     }
     
     if(!mManualPosition)

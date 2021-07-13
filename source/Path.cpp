@@ -8,7 +8,7 @@ Path::Path(Game *game, Field *nord1, Field *nord2)
 :Actor(game), mNord1(nord1), mNord2(nord2), mWeight(DEFAULT_HEAVY_WEIGHT)
 {
     if(mNord1->GetPosition().y < mNord2->GetPosition().y) std::swap(mNord1, mNord2);
-    SpriteComponent *sc = new SpriteComponent(this, 30);
+    SpriteComponent *sc = new SpriteComponent(this, 30, MANUAL_POSITIONING, MANUAL_SCALING);
     sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/path.png"));
     auto pos = mNord1->GetPosition() + mNord2->GetPosition() + PATH_SLIDE;
     pos.x /= 2.0f; pos.y /= 2.0f;
@@ -18,10 +18,11 @@ Path::Path(Game *game, Field *nord1, Field *nord2)
         rotation = M_PI/2.0f;
     }
     else rotation = std::atan((mNord2->GetPosition().y-mNord1->GetPosition().y)/(mNord2->GetPosition().x - mNord1->GetPosition().x));
-    SetPosition(pos);
+    sc->SetPosition(pos);
     SetRotation(-rotation);
     float dist = sqrt(std::pow(mNord1->GetPosition().x - mNord2->GetPosition().x, 2.0) + std::pow(mNord1->GetPosition().y - mNord2->GetPosition().y, 2.0));
-    SetScale(PATH_SCALE * dist);
+    sc->SetScale(PATH_SCALE_X * dist, PATH_SCALE_Y);
+    SetScale(PATH_SCALE_X * dist);
     game->AddPath(this);
 }
 
