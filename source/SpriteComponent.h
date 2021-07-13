@@ -18,7 +18,7 @@ public:
   virtual void Draw(SDL_Renderer* renderer);
   
   virtual void SetTexture(SDL_Texture* texture);
-  void SetPosition(const Vector2 position){mPosition = position;}
+  void SetPosition(const Vector2& position){mPosition = position;}
   void SetScale(const float scale){ mScaleX = scale; mScaleY = scale;}
   void SetScale(const float scalex, const float scaley){mScaleX = scalex; mScaleY = scaley;}
   

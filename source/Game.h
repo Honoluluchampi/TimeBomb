@@ -5,14 +5,19 @@
 #include <vector>
 #include "Math.h"
 
+// window
 const float WIDTH = 1024.0f + 100.0f;
 const float HEIGHT = 768.0f;
 const float UPPER_LEFT_X = 100.0f;
 const float UPPER_LEFT_Y = 100.0f;
+// delta time
 const int LEAST_FRAME_TICKS = 16;
 const float DELTA_TIME_UPPER_LIMIT = 0.05f;
+// player
 const int PLAYER_STEP = 2;
 const int DISTRIBUTE_BOMB_TURN = 3;
+const float STANDARD_HEIGHT = -25;
+const float AMPLITUDE = 10;
 const float PATH_SCALE_X = 0.006f;
 const float PATH_SCALE_Y = 0.55f;
 const Vector2 PATH_SLIDE = Vector2(20.0f, 65.0f);

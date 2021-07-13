@@ -7,11 +7,12 @@
 #include <iostream>
 
 TBPlayer::TBPlayer(Game *game, Field *ip, bool player, const int &bombnum) : 
-Actor(game),  mHitPoint(INITIAL_HIT_POINT), mCurrentField(ip)
+Actor(game),  mHitPoint(INITIAL_HIT_POINT), mCurrentField(ip), mIsMoving(false), mTime(0.0f)
 {
-    SpriteComponent *sc = new SpriteComponent(this, 100);
-    if(player) sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/blue_ball.png"));
-    else sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/red_ball.png"));
+    mBallSprite = new SpriteComponent(this, 100, MANUAL_POSITIONING);
+    if(player) mBallSprite->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/blue_ball.png"));
+    else mBallSprite->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/red_ball.png"));
+    mBallSprite->SetPosition(mCurrentField->GetPosition());
     SetPosition(mCurrentField->GetPosition());
     SetRotation(mCurrentField->GetRotation());
 
@@ -20,6 +21,13 @@ Actor(game),  mHitPoint(INITIAL_HIT_POINT), mCurrentField(ip)
 
 TBPlayer::~TBPlayer()
 {
+}
+
+void TBPlayer::UpdateActor(float deltaTime)
+{
+    mTime += deltaTime;
+    Vector2 floatingPos = Vector2(0, STANDARD_HEIGHT + std::sin(mTime*3.0f)*AMPLITUDE);
+    mBallSprite->SetPosition(GetPosition() + floatingPos);
 }
 
 void TBPlayer::ChangeCurrentField(Field *field)
