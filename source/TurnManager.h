@@ -41,8 +41,7 @@ public:
     void MovePlayer(class Field* field);
     void Explosion(class Bomb* bomb);
    // remaining bomb number sprite
-    void SetNumberSprite(class SpriteComponent* sc, int &count);
-    void ChangeNumberSprite(class SpriteComponent* sc, int count, bool init = false);
+    void SetNumberSprite(class SpriteComponent* sc, int count);
     void ChooseWhetherSetBomb(SDL_Event &event);
     void SetBomb(int count);
 

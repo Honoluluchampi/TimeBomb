@@ -14,7 +14,6 @@ public:
     void SetCountSprite();
     void SetReadyToExplode(){mReadyToExplode = true;}
     bool GetReadyToExplode(){return mReadyToExplode;}
-    void ChangeCountSprite();
     void DecrementCount();
     bool CheckBombCount();
     

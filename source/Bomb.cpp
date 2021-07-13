@@ -33,13 +33,6 @@ Bomb::~Bomb()
     GetGame()->RemoveSettedBomb(this);
 }
 
-void Bomb::ChangeCountSprite()
-{
-    delete mCountSprite;
-    mCountSprite = new SpriteComponent(this, 140);
-    SetCountSprite();
-}
-
 void Bomb::SetCountSprite()
 {
     switch(mCount){
@@ -64,7 +57,7 @@ void Bomb::DecrementCount()
 {
     mCount--;
     std::cout << "decrement" << std::endl;
-    ChangeCountSprite();
+    SetCountSprite();
 }
 
 bool Bomb::CheckBombCount()

@@ -8,7 +8,7 @@ const int TEXHEIGHT = 756;
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder, bool isManualPosition, bool isManualScale)
 :Component(owner),mTexture(nullptr),mTexWidth(TEXWIDTH),mTexHeight(TEXHEIGHT),
-mDrawOrder(drawOrder),mManualPosition(isManualPosition),mManualScale(isManualPosition)
+mDrawOrder(drawOrder),mManualPosition(isManualPosition),mManualScale(isManualScale)
 {
   mOwner->GetGame()->AddSprite(this);
 }

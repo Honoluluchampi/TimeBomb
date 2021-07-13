@@ -24,28 +24,28 @@ Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_
     mTurn = true;
 
     // first true means manual positioning, second true means manual scaling
-    mRemainingBombNum1 = new SpriteComponent(this, 200, true);
-    mRemainingBombNum2 = new SpriteComponent(this, 200, true);
-    mRemainingLifeNum1 = new SpriteComponent(this, 200, true);
-    mRemainingLifeNum2 = new SpriteComponent(this, 200, true);
-    mLifeString = new SpriteComponent(this, 200, true, true);
-    mBombString = new SpriteComponent(this, 200, true, true);
-    
-    // SET SPRITE
-    ChangeNumberSprite(mRemainingBombNum1, INITIAL_PENDING_BOMB_NUM, true);
-    ChangeNumberSprite(mRemainingBombNum2, INITIAL_PENDING_BOMB_NUM, true);
-    ChangeNumberSprite(mRemainingLifeNum1, INITIAL_HIT_POINT, true);
-    ChangeNumberSprite(mRemainingLifeNum2, INITIAL_HIT_POINT, true);
-    mBombString->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Documents/study/2021_S_lecture_materials/programming_exercise/final_assignment/Assets/bomb_string.PNG"));
-    mLifeString->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Documents/study/2021_S_lecture_materials/programming_exercise/final_assignment/Assets/life_string.PNG"));
-    
+    mRemainingBombNum1 = new SpriteComponent(this, 200, MANUAL_POSITIONING);
+    mRemainingBombNum2 = new SpriteComponent(this, 200, MANUAL_POSITIONING);
+    mRemainingLifeNum1 = new SpriteComponent(this, 200, MANUAL_POSITIONING);
+    mRemainingLifeNum2 = new SpriteComponent(this, 200, MANUAL_POSITIONING);
+    mLifeString = new SpriteComponent(this, 200, MANUAL_POSITIONING, MANUAL_SCALING);
+    mBombString = new SpriteComponent(this, 200, MANUAL_POSITIONING, MANUAL_SCALING);
+
     // SET POSTION
     mRemainingBombNum1->SetPosition(PENDING_BOMB_NUM_POSITION1);
     mRemainingBombNum2->SetPosition(PENDING_BOMB_NUM_POSITION2);
     mRemainingLifeNum1->SetPosition(HIT_POINT_POSITION1);
-    mRemainingLifeNum2->SetPosition(HIT_POINT_POSITION1);
+    mRemainingLifeNum2->SetPosition(HIT_POINT_POSITION2);
     mBombString->SetPosition(PENDING_BOMB_STRING_POSITION);
     mLifeString->SetPosition(HIT_POINT_STRING_POSITION);
+    
+    // SET SPRITE
+    SetNumberSprite(mRemainingBombNum1, INITIAL_PENDING_BOMB_NUM);
+    SetNumberSprite(mRemainingBombNum2, INITIAL_PENDING_BOMB_NUM);
+    SetNumberSprite(mRemainingLifeNum1, INITIAL_HIT_POINT);
+    SetNumberSprite(mRemainingLifeNum2, INITIAL_HIT_POINT);
+    mBombString->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Documents/study/2021_S_lecture_materials/programming_exercise/final_assignment/Assets/bomb_string.PNG"));
+    mLifeString->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Documents/study/2021_S_lecture_materials/programming_exercise/final_assignment/Assets/life_string.PNG"));
 
     // SET SCALE
     mBombString->SetScale(STRING_SCALE);
@@ -66,8 +66,8 @@ void TurnManager::UpdateActor(float deltaTime)
             if(mDistributeBomb == 0)
             {
                 mCurrentPlayer->GetBomb();
-                if(mCurrentPlayer == mPlayer1) ChangeNumberSprite(mRemainingBombNum1, mPlayer1->GetPendingBombNum());
-                else ChangeNumberSprite(mRemainingBombNum2, mPlayer2->GetPendingBombNum());
+                if(mCurrentPlayer == mPlayer1) SetNumberSprite(mRemainingBombNum1, mPlayer1->GetPendingBombNum());
+                else SetNumberSprite(mRemainingBombNum2, mPlayer2->GetPendingBombNum());
             }
             if(mCurrentPlayer == mPlayer2) mDistributeBomb == DISTRIBUTE_BOMB_TURN - 1 ? mDistributeBomb = 0 : mDistributeBomb++;
             mPhase = GET_CANDIDATE_FIELDS;
@@ -297,7 +297,7 @@ void TurnManager::MovePlayer(Field *field)
     mCurrentPlayer->ChangeCurrentField(field);
 }
 
-void TurnManager::SetNumberSprite(SpriteComponent* sc, int &num)
+void TurnManager::SetNumberSprite(SpriteComponent* sc, int num)
 {
     assert(sc != nullptr);
     switch(num){
@@ -319,15 +319,6 @@ void TurnManager::SetNumberSprite(SpriteComponent* sc, int &num)
         default :
             break;
     }
-}
-
-void TurnManager::ChangeNumberSprite(SpriteComponent* sc, int count, bool init)
-{
-    auto position = sc->GetPosition();
-    if(!init) delete sc;
-    sc = new SpriteComponent(this, 200, true);
-    SetNumberSprite(sc, count);
-    sc->SetPosition(position);
 }
 
 void TurnManager::ChooseWhetherSetBomb(SDL_Event &event)
@@ -377,8 +368,8 @@ void TurnManager::ChooseWhetherSetBomb(SDL_Event &event)
 void TurnManager::SetBomb(int count)
 {
     mCurrentPlayer->SetBomb(count);
-    if(mTurn) ChangeNumberSprite(mRemainingBombNum1, mPlayer1->GetPendingBombNum());
-    else ChangeNumberSprite(mRemainingBombNum2, mPlayer2->GetPendingBombNum());
+    if(mTurn) SetNumberSprite(mRemainingBombNum1, mPlayer1->GetPendingBombNum());
+    else SetNumberSprite(mRemainingBombNum2, mPlayer2->GetPendingBombNum());
 }
 
 void TurnManager::Explosion(Bomb *bomb)
