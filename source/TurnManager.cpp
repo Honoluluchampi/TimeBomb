@@ -378,11 +378,19 @@ void TurnManager::Explosion(Bomb *bomb)
     Field* bf = bomb->GetBombField();
     // target field
     Field* tf = mCurrentPlayer->GetCurrentField();
+    if(bf == tf)
+    {
+        mCurrentPlayer->DecrementHitPoint();
+        if(mTurn) SetNumberSprite(mRemainingLifeNum1, mCurrentPlayer->GetHitPoint());
+        else SetNumberSprite(mRemainingLifeNum2, mCurrentPlayer->GetHitPoint());
+    }
     for(auto path : GetGame()->GetPaths())
     {
         if((path->GetNord1() == bf && path->GetNord2() == tf) || (path->GetNord2() == bf && path->GetNord1() == tf))
         {
             mCurrentPlayer->DecrementHitPoint();
+            if(mTurn) SetNumberSprite(mRemainingLifeNum1, mCurrentPlayer->GetHitPoint());
+            else SetNumberSprite(mRemainingLifeNum2, mCurrentPlayer->GetHitPoint());
         }
     }
 }
