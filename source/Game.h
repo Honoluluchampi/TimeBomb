@@ -45,7 +45,15 @@ const std::pair<int,int> PATH_EDGES[] = {
 const int INITIAL_FIELD_FOR_1 = 0;
 const int INITIAL_FIELD_FOR_2 = 15;
 
-const Vector2 PENDING_BOMB_NUM_POSITION = Vector2(WIDTH * 8/9, HEIGHT * 1/9);
+const Vector2 PENDING_BOMB_STRING_POSITION = Vector2(WIDTH * 7/9, HEIGHT * 1/9);
+const Vector2 PENDING_BOMB_NUM_POSITION1 = Vector2(WIDTH * 6/9, HEIGHT * 1/9);
+const Vector2 PENDING_BOMB_NUM_POSITION2 = Vector2(WIDTH * 8/9, HEIGHT * 1/9);
+
+const Vector2 HIT_POINT_STRING_POSITION = Vector2(WIDTH * 2/9, HEIGHT * 1/9);
+const Vector2 HIT_POINT_POSITION1 = Vector2(WIDTH * 3/9, HEIGHT * 1/9);
+const Vector2 HIT_POINT_POSITION2 = Vector2(WIDTH * 5/9, HEIGHT * 1/9);
+
+const float STRING_SCALE = 0.15;
 
 class Game
 {

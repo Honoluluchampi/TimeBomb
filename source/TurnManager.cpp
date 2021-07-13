@@ -23,11 +23,34 @@ Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_
     mOppositePlayer = mPlayer2;
     mTurn = true;
 
-    mRemainingBombNum = new SpriteComponent(this, 200);
-    // not sofisticated
-    int inibom = INITIAL_PENDING_BOMB_NUM;
-    SetRemainingBombNum(inibom);
-    SetPosition(PENDING_BOMB_NUM_POSITION);
+    // first true means manual positioning, second true means manual scaling
+    mRemainingBombNum1 = new SpriteComponent(this, 200, true);
+    mRemainingBombNum2 = new SpriteComponent(this, 200, true);
+    mRemainingLifeNum1 = new SpriteComponent(this, 200, true);
+    mRemainingLifeNum2 = new SpriteComponent(this, 200, true);
+    mLifeString = new SpriteComponent(this, 200, true, true);
+    mBombString = new SpriteComponent(this, 200, true, true);
+    
+    // SET SPRITE
+    ChangeNumberSprite(mRemainingBombNum1, INITIAL_PENDING_BOMB_NUM, true);
+    ChangeNumberSprite(mRemainingBombNum2, INITIAL_PENDING_BOMB_NUM, true);
+    ChangeNumberSprite(mRemainingLifeNum1, INITIAL_HIT_POINT, true);
+    ChangeNumberSprite(mRemainingLifeNum2, INITIAL_HIT_POINT, true);
+    mBombString->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Documents/study/2021_S_lecture_materials/programming_exercise/final_assignment/Assets/bomb_string.PNG"));
+    mLifeString->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Documents/study/2021_S_lecture_materials/programming_exercise/final_assignment/Assets/life_string.PNG"));
+    
+    // SET POSTION
+    mRemainingBombNum1->SetPosition(PENDING_BOMB_NUM_POSITION1);
+    mRemainingBombNum2->SetPosition(PENDING_BOMB_NUM_POSITION2);
+    mRemainingLifeNum1->SetPosition(HIT_POINT_POSITION1);
+    mRemainingLifeNum2->SetPosition(HIT_POINT_POSITION1);
+    mBombString->SetPosition(PENDING_BOMB_STRING_POSITION);
+    mLifeString->SetPosition(HIT_POINT_STRING_POSITION);
+
+    // SET SCALE
+    mBombString->SetScale(STRING_SCALE);
+    mLifeString->SetScale(STRING_SCALE);
+
     SetRotation(0);
 }
 
@@ -43,7 +66,8 @@ void TurnManager::UpdateActor(float deltaTime)
             if(mDistributeBomb == 0)
             {
                 mCurrentPlayer->GetBomb();
-                if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
+                if(mCurrentPlayer == mPlayer1) ChangeNumberSprite(mRemainingBombNum1, mPlayer1->GetPendingBombNum());
+                else ChangeNumberSprite(mRemainingBombNum2, mPlayer2->GetPendingBombNum());
             }
             if(mCurrentPlayer == mPlayer2) mDistributeBomb == DISTRIBUTE_BOMB_TURN - 1 ? mDistributeBomb = 0 : mDistributeBomb++;
             mPhase = GET_CANDIDATE_FIELDS;
@@ -273,38 +297,37 @@ void TurnManager::MovePlayer(Field *field)
     mCurrentPlayer->ChangeCurrentField(field);
 }
 
-void TurnManager::SetRemainingBombNum(int &num)
+void TurnManager::SetNumberSprite(SpriteComponent* sc, int &num)
 {
-    assert(mRemainingBombNum != nullptr);
+    assert(sc != nullptr);
     switch(num){
         case 0 :
-            mRemainingBombNum->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/zero.png"));
+            sc->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/zero.png"));
             break;
         case 1 : 
-            mRemainingBombNum->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/one.png"));
+            sc->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/one.png"));
             break;
         case 2 : 
-            mRemainingBombNum->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/two.png"));
+            sc->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/two.png"));
             break;
         case 3 : 
-            mRemainingBombNum->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/three.png"));
+            sc->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/three.png"));
             break;
         case 4 : 
-            mRemainingBombNum->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/four.png"));
+            sc->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/four.png"));
             break;
         default :
             break;
     }
 }
 
-void TurnManager::ChangePendingBombNum(int count)
+void TurnManager::ChangeNumberSprite(SpriteComponent* sc, int count, bool init)
 {
-    assert(mRemainingBombNum != nullptr);
-    delete mRemainingBombNum;
-    mRemainingBombNum = new SpriteComponent(this, 200);
-    SetRemainingBombNum(count);
-    SetPosition(PENDING_BOMB_NUM_POSITION);
-    SetRotation(0);
+    auto position = sc->GetPosition();
+    if(!init) delete sc;
+    sc = new SpriteComponent(this, 200, true);
+    SetNumberSprite(sc, count);
+    sc->SetPosition(position);
 }
 
 void TurnManager::ChooseWhetherSetBomb(SDL_Event &event)
@@ -316,29 +339,26 @@ void TurnManager::ChooseWhetherSetBomb(SDL_Event &event)
                 auto key = event.key.keysym.sym;
                 if(key == SDLK_1)
                 {
-                    mCurrentPlayer->SetBomb(1);
-                    if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
+                    // decrement pending bomb num in setbomb of player
+                    SetBomb(1);
                     mPhase = CHANGE_PLAYER;
                     break;
                 }
                 if(key == SDLK_2)
                 {
-                    mCurrentPlayer->SetBomb(2);
-                    if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
+                    SetBomb(2);
                     mPhase = CHANGE_PLAYER;
                     break;
                 }
                 if(key == SDLK_3)
                 {
-                    mCurrentPlayer->SetBomb(3);
-                    if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
+                    SetBomb(3);
                     mPhase = CHANGE_PLAYER;
                     break;
                 }
                 if(key == SDLK_4)
                 {
-                    mCurrentPlayer->SetBomb(4);
-                    if(mCurrentPlayer == mPlayer1) ChangePendingBombNum(mPlayer1->GetPendingBombNum());
+                    SetBomb(4);
                     mPhase = CHANGE_PLAYER;
                     break;
                 }
@@ -352,6 +372,13 @@ void TurnManager::ChooseWhetherSetBomb(SDL_Event &event)
         default:
             break;
     }
+}
+
+void TurnManager::SetBomb(int count)
+{
+    mCurrentPlayer->SetBomb(count);
+    if(mTurn) ChangeNumberSprite(mRemainingBombNum1, mPlayer1->GetPendingBombNum());
+    else ChangeNumberSprite(mRemainingBombNum2, mPlayer2->GetPendingBombNum());
 }
 
 void TurnManager::Explosion(Bomb *bomb)

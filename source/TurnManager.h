@@ -41,9 +41,10 @@ public:
     void MovePlayer(class Field* field);
     void Explosion(class Bomb* bomb);
    // remaining bomb number sprite
-    void SetRemainingBombNum(int &count);
-    void ChangePendingBombNum(int count);
+    void SetNumberSprite(class SpriteComponent* sc, int &count);
+    void ChangeNumberSprite(class SpriteComponent* sc, int count, bool init = false);
     void ChooseWhetherSetBomb(SDL_Event &event);
+    void SetBomb(int count);
 
     void CreateExplosionAnim(class Actor* owner);
     void AddExplosionAnim(class ExplosionAnimSpriteComponent *ea);
@@ -55,7 +56,13 @@ private:
     class TBPlayer* mOppositePlayer;
     class Cursor* mCursor;
     std::vector<class Field*> mCandFields;
-    class SpriteComponent* mRemainingBombNum;
+    class SpriteComponent* mBombString;
+    class SpriteComponent* mRemainingBombNum1;
+    class SpriteComponent* mRemainingBombNum2;
+    class SpriteComponent* mLifeString;
+    class SpriteComponent* mColon;
+    class SpriteComponent* mRemainingLifeNum1;
+    class SpriteComponent* mRemainingLifeNum2;
     std::vector<class ExplosionAnimSpriteComponent*> mExplosionAnim;
 
     int mPhase;
