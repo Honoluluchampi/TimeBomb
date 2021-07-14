@@ -10,6 +10,7 @@
 #include "Path.h"
 #include <iostream>
 #include "Bomb.h"
+#include "Players.h"
 
 Game::Game()
 :mWindow(nullptr), mRenderer(nullptr), mIsRunning(true), mUpdatingActors(false)
@@ -32,8 +33,8 @@ void Game::LoadData()
   }
 
   // create players
-  mTBPlayer1 = new TBPlayer(this, mFields[INITIAL_FIELD_FOR_1], true, INITIAL_PENDING_BOMB_NUM);
-  mTBPlayer2 = new TBPlayer(this, mFields[INITIAL_FIELD_FOR_2], false, INITIAL_PENDING_BOMB_NUM);
+  mTBPlayer1 = new TBPlayer(this, mFields[INITIAL_FIELD_FOR_1], true, INITIAL_PENDING_BOMB_NUM, MANUAL_PLAYER);
+  mTBPlayer2 = new RandomPlayer(this, mFields[INITIAL_FIELD_FOR_2], false, INITIAL_PENDING_BOMB_NUM, RANDOM_PLAYER);
 
   // create TurnManager
   mTurnManager = new TurnManager(this, mTBPlayer1, mTBPlayer2);

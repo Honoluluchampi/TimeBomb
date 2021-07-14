@@ -7,13 +7,18 @@
 #include <cmath>
 #include <iostream>
 
-TBPlayer::TBPlayer(Game *game, Field *ip, bool player, const int &bombnum) : 
-Actor(game),  mHitPoint(INITIAL_HIT_POINT), mCurrentField(ip), mIsMoving(false), mTime(0.0f)
+TBPlayer::TBPlayer(Game *game, Field *ip, bool player, const int &bombnum, int playerType) : 
+Actor(game),  mHitPoint(INITIAL_HIT_POINT), mCurrentField(ip), mIsMoving(false), mTime(0.0f), mPlayerType(playerType)
 {
+    // ball sprite
     mBallSprite = new SpriteComponent(this, 100, MANUAL_POSITIONING);
     if(player) mBallSprite->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/blue_ball.png"));
     else mBallSprite->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/red_ball.png"));
     mBallSprite->SetPosition(mCurrentField->GetPosition());
+
+    // shadow sprite
+    mShadowSprite = new SpriteComponent(this, 100);
+    mShadowSprite->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/ball_shadow.png"));
     SetPosition(mCurrentField->GetPosition());
     SetRotation(mCurrentField->GetRotation());
 

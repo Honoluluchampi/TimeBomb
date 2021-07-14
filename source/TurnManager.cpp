@@ -90,8 +90,18 @@ void TurnManager::UpdateActor(float deltaTime)
             {
                 field->CreateCandSprite(this->GetGame(), mTurn);
             }
-            mPhase = CHOOSE_AND_MOVE_FIELD;
+            // CHOOSE MACUALY ONLY IF PALYER IS MANUAL
+            if(mCurrentPlayer->GetPlayerType() == MANUAL_PLAYER) mPhase = MANUAL_CHOOSE_FIELD;
+            else mPhase = AUTOMATIC_CHOOSE_FIELD;
             std::cout << "create_cand_field_sprite" << std::endl;
+            break;
+
+        case AUTOMATIC_CHOOSE_FIELD :
+            {
+                auto newField = mCurrentPlayer->ChooseField(mCandFields);
+                mCurrentPlayer->SetDestinationField(newField);
+            }
+            mPhase = DELETE_CAND_FIELD_SPITE;
             break;
 
         case DELETE_CURSOR :
@@ -184,8 +194,20 @@ void TurnManager::UpdateActor(float deltaTime)
             }
             // player cant put bomb if pending bomb num is less than 0
             if(mCurrentPlayer->GetPendingBombNum() <= 0) mPhase = CHANGE_PLAYER;
-            else mPhase = WHETHER_SET_BOMB;
+            else
+            {
+                if(mCurrentPlayer->GetPlayerType() == MANUAL_PLAYER) mPhase = MANUAL_WHETHER_SET_BOMB;
+                else mPhase = AUTOMATIC_WHETHER_SET_BOMB;
+            }
             std::cout << "check_bomb_count" << std::endl;
+            break;
+
+        case AUTOMATIC_WHETHER_SET_BOMB :
+            {
+                int timeLimit = mCurrentPlayer->ChooseTimeLimit();
+                if(timeLimit != 0) SetBomb(timeLimit);
+            }
+            mPhase = DELETE_CURSOR;
             break;
 
         case CHANGE_PLAYER :
@@ -204,11 +226,11 @@ void TurnManager::ActorInput(SDL_Event &event)
 {
     switch(mPhase)
     {
-        case CHOOSE_AND_MOVE_FIELD :
+        case MANUAL_CHOOSE_FIELD :
             ChooseField(event);
             break;
 
-        case WHETHER_SET_BOMB :
+        case MANUAL_WHETHER_SET_BOMB :
             ChooseWhetherSetBomb(event);
             break;
 

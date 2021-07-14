@@ -2,10 +2,16 @@
 #include "Actor.h"
 #include "Math.h"
 
+enum PlayerType
+{
+    MANUAL_PLAYER,
+    RANDOM_PLAYER
+};
+
 class TBPlayer : public Actor
 {
 public:
-    TBPlayer(class Game* game, class Field* ip, bool player, const int &bombnum); // ip : initial position
+    TBPlayer(class Game* game, class Field* ip, bool player, const int &bombnum, int playerType = 0); // ip : initial position
     ~TBPlayer(); // call the ending manager
 
     void UpdateActor(float deltaTime);
@@ -14,6 +20,7 @@ public:
     // getter setter
     class Field* GetCurrentField(){return mCurrentField;}
     void GetBomb();
+    int GetPlayerType() const { return mPlayerType;}
     // move
     bool GetIsMoving(){return mIsMoving;}
     void SetIsMoving(bool move){mIsMoving = move;}
@@ -30,6 +37,11 @@ public:
     // true:delete false:alive
     bool CheckHitPoint();
 
+    // CHOOSING FIELD
+    virtual class Field* ChooseField(std::vector<class Field*> candFields){return nullptr;}
+    // choosing time limit
+    virtual int ChooseTimeLimit(){return 0;}
+
 private:
     int mHitPoint;
     int mPendingBombNum;
@@ -41,4 +53,5 @@ private:
     Vector2 mForwardVec;
     class SpriteComponent* mBallSprite;
     class SpriteComponent* mShadowSprite;
+    int mPlayerType;
 };
