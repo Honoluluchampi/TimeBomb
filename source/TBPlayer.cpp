@@ -49,13 +49,13 @@ void TBPlayer::GetBomb()
     }
 }
 
-void TBPlayer::SetBomb(int count)
+void TBPlayer::SetBomb(int count, bool visible)
 {
     if(mPendingBombNum <= 0){
         return;
     }
     mPendingBombNum--;
-    Bomb *bomb = new Bomb(GetGame(), this, mCurrentField, count);
+    Bomb *bomb = new Bomb(GetGame(), this, mCurrentField, count, visible);
     GetGame()->AddSettedBomb(bomb);
     std::cout << "before add" << std::endl;
     std::cout << "after add" << std::endl;

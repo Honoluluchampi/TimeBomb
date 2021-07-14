@@ -5,8 +5,8 @@
 #include "Field.h"
 #include <iostream>
 
-Bomb::Bomb(Game *game, TBPlayer *owner, Field *field, int &count) : 
-Actor(game), mReadyToExplode(false), mBombOwner(owner), mField(field)
+Bomb::Bomb(Game *game, TBPlayer *owner, Field *field, int &count, bool visible) : 
+Actor(game), mReadyToExplode(false), mBombOwner(owner), mField(field), mIsVisible(visible)
 {
     // bomb sprite
     SpriteComponent *sc = new SpriteComponent(this, 130);
@@ -15,7 +15,7 @@ Actor(game), mReadyToExplode(false), mBombOwner(owner), mField(field)
     // coutn sprite
     SetCount(count);
     mCountSprite = new SpriteComponent(this, 140);
-    SetCountSprite();
+    if(mIsVisible) SetCountSprite();
 
     // position, rotation
     SetPosition(mField->GetPosition());
@@ -57,7 +57,7 @@ void Bomb::DecrementCount()
 {
     mCount--;
     std::cout << "decrement" << std::endl;
-    SetCountSprite();
+    if(mIsVisible) SetCountSprite();
 }
 
 bool Bomb::CheckBombCount()

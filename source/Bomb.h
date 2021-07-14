@@ -4,7 +4,7 @@
 class Bomb : public Actor
 {
 public:
-    Bomb(class Game* game, class TBPlayer* owner, class Field *field, int &count);
+    Bomb(class Game* game, class TBPlayer* owner, class Field *field, int &count, bool visible);
     ~Bomb();
 
     // change count function
@@ -23,4 +23,5 @@ private:
     class TBPlayer* mBombOwner;
     class SpriteComponent* mCountSprite;
     class Field* mField;
+    bool mIsVisible;
 };

@@ -18,7 +18,7 @@ public:
     bool GetIsMoving(){return mIsMoving;}
     void SetIsMoving(bool move){mIsMoving = move;}
     // bomb
-    void SetBomb(int count);
+    void SetBomb(int count, bool visible);
     void SetCountSprite(int &count);
     void SetCountSprite(const int &count);
     void SetDestinationField(class Field *field);

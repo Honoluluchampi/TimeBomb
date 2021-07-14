@@ -367,7 +367,7 @@ void TurnManager::ChooseWhetherSetBomb(SDL_Event &event)
 
 void TurnManager::SetBomb(int count)
 {
-    mCurrentPlayer->SetBomb(count);
+    mCurrentPlayer->SetBomb(count, mTurn);
     if(mTurn) SetNumberSprite(mRemainingBombNum1, mPlayer1->GetPendingBombNum());
     else SetNumberSprite(mRemainingBombNum2, mPlayer2->GetPendingBombNum());
 }
