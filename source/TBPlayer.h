@@ -9,13 +9,19 @@ public:
     ~TBPlayer(); // call the ending manager
 
     void UpdateActor(float deltaTime);
+    void MoveToNextField(float deltaTime);
 
     // getter setter
     class Field* GetCurrentField(){return mCurrentField;}
     void GetBomb();
+    // move
+    bool GetIsMoving(){return mIsMoving;}
+    void SetIsMoving(bool move){mIsMoving = move;}
+    // bomb
     void SetBomb(int count);
     void SetCountSprite(int &count);
     void SetCountSprite(const int &count);
+    void SetDestinationField(class Field *field);
     int GetHitPoint(){return mHitPoint;}
     int GetPendingBombNum(){return mPendingBombNum;}
 
@@ -28,9 +34,11 @@ private:
     int mHitPoint;
     int mPendingBombNum;
     class Field* mCurrentField;
+    class Field* mDestinationField;
     bool mIsMoving;
     float mTime;
     Vector2 mFloatingPosition;
+    Vector2 mForwardVec;
     class SpriteComponent* mBallSprite;
     class SpriteComponent* mShadowSprite;
 };

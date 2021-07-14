@@ -18,6 +18,8 @@ const int PLAYER_STEP = 2;
 const int DISTRIBUTE_BOMB_TURN = 3;
 const float STANDARD_HEIGHT = -25;
 const float AMPLITUDE = 10;
+const float VIBRATION_BOOST = 4.0f;
+const float MOVE_BOOST = 300.0f;
 const float PATH_SCALE_X = 0.006f;
 const float PATH_SCALE_Y = 0.55f;
 const Vector2 PATH_SLIDE = Vector2(20.0f, 65.0f);
@@ -34,7 +36,7 @@ const Vector2 FIELD_POSITION[] = {
   Vector2(WIDTH*8/9, HEIGHT*2/9),
   Vector2(WIDTH*1/6, HEIGHT*5/9),
   Vector2(WIDTH*2/7, HEIGHT*3/7),
-  Vector2(WIDTH*5/9, HEIGHT*4/9),
+  Vector2(WIDTH*1/2, HEIGHT*4/9),
   Vector2(WIDTH*4/5, HEIGHT*1/3),
   Vector2(WIDTH*1/8, HEIGHT*5/6),
   Vector2(WIDTH*1/3, HEIGHT*2/3),
@@ -46,7 +48,7 @@ const Vector2 FIELD_POSITION[] = {
 };
 const std::pair<int,int> PATH_EDGES[] = {
   {1,0}, {2,1}, {3,2}, {4,3}, {5,0}, {6,1}, {7,2}, {8,4}, {6,5}, {7,6}, {8,7},
-  {9,5}, {10,9}, {10,7}, {11,8}, {12,8}, {12,11}, {10,13}, {11,14}, {15,12}, {14,13}, {15,14}
+  {9,5}, {10,9}, {10,7}, {11,8}, {12,8}, {7,11}, {12,11}, {10,13}, {11,14}, {15,12}, {14,13}, {15,14}
 };
 const int INITIAL_FIELD_FOR_1 = 0;
 const int INITIAL_FIELD_FOR_2 = 15;

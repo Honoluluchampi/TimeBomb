@@ -97,7 +97,7 @@ void TurnManager::UpdateActor(float deltaTime)
         case DELETE_CURSOR :
             std::cout << "chooose_and_mobe_fields" << std::endl;
             delete mCursor;
-            mPhase = DELETE_CAND_FIELD_SPITE;
+            mPhase = CHANGE_PLAYER;
             std::cout << "delete_cursor" << std::endl;
             break;
 
@@ -106,9 +106,14 @@ void TurnManager::UpdateActor(float deltaTime)
             {
                 field->DeleteCandSprite();
             }
-            mPhase = DECREMENT_OPPOSITE_PLAYERS_BOMB;
+            mCurrentPlayer->SetIsMoving(true);
+            mPhase = MOVE_TO_DESTINATION_FIELD;
             std::cout << "delete_cand_fields_sprite" << std::endl;
             break;
+
+        case MOVE_TO_DESTINATION_FIELD :
+            if(mCurrentPlayer->GetIsMoving()) break;
+            else mPhase = DECREMENT_OPPOSITE_PLAYERS_BOMB;
 
         case DECREMENT_OPPOSITE_PLAYERS_BOMB :
             for(auto bomb : GetGame()->GetSettedBombs())
@@ -282,19 +287,14 @@ void TurnManager::ChooseField(SDL_Event &event)
             {
                 auto iter = std::find(mCandFields.begin(), mCandFields.end(), mCursor->GetPointingField());
                 // MOVE ONTO NEXT FIELD
-                MovePlayer(*iter);
-                mPhase = DELETE_CURSOR;
+                mCurrentPlayer->SetDestinationField(*iter);
+                mPhase = DELETE_CAND_FIELD_SPITE;
             }
         }
         break;
     default:
         break;
     }
-}
-
-void TurnManager::MovePlayer(Field *field)
-{
-    mCurrentPlayer->ChangeCurrentField(field);
 }
 
 void TurnManager::SetNumberSprite(SpriteComponent* sc, int num)
@@ -332,30 +332,30 @@ void TurnManager::ChooseWhetherSetBomb(SDL_Event &event)
                 {
                     // decrement pending bomb num in setbomb of player
                     SetBomb(1);
-                    mPhase = CHANGE_PLAYER;
+                    mPhase = DELETE_CURSOR;
                     break;
                 }
                 if(key == SDLK_2)
                 {
                     SetBomb(2);
-                    mPhase = CHANGE_PLAYER;
+                    mPhase = DELETE_CURSOR;
                     break;
                 }
                 if(key == SDLK_3)
                 {
                     SetBomb(3);
-                    mPhase = CHANGE_PLAYER;
+                    mPhase = DELETE_CURSOR;
                     break;
                 }
                 if(key == SDLK_4)
                 {
                     SetBomb(4);
-                    mPhase = CHANGE_PLAYER;
+                    mPhase = DELETE_CURSOR;
                     break;
                 }
                 if(key == SDLK_n)
                 {
-                    mPhase = CHANGE_PLAYER;
+                    mPhase = DELETE_CURSOR;
                     break;
                 }
             }
