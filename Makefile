@@ -1,8 +1,8 @@
 TARGET = timebomb
-SOURCES = main.cpp Game.cpp Actor.cpp Component.cpp SpriteComponent.cpp Field.cpp Math.cpp TBPlayer.cpp
+SOURCES = main.cpp Game.cpp Actor.cpp Component.cpp SpriteComponent.cpp Field.cpp Math.cpp TBPlayer.cpp TurnManager.cpp Cursor.cpp Path.cpp Bomb.cpp AnimeSpriteComponent.cpp ExplosionAnimeSpriteComponent.cpp Players.cpp
 
 COMPILER  = g++
-CFLAGS    = -Wall -std=c++17 -MMD -MP
+CFLAGS    = -Wall -std=c++17 -MMD -MP -g3
 ifeq "$(shell getconf LONG_BIT)" "64"
   LDFLAGS = /usr/local/Cellar/sdl2_image/2.0.5/lib/libSDL2_image-2.0.0.dylib /usr/local/Cellar/sdl2/2.0.14_1/lib/libSDL2-2.0.0.dylib
 else
