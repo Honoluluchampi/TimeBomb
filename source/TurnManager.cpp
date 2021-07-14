@@ -189,11 +189,12 @@ void TurnManager::UpdateActor(float deltaTime)
         case CHECK_PLAYER_HIT_POINT :
             if (mCurrentPlayer->GetHitPoint()<=0)
             {
+                mCurrentPlayer->DeleteSprite();
                 mPhase = ENDING;
                 break;
             }
             // player cant put bomb if pending bomb num is less than 0
-            if(mCurrentPlayer->GetPendingBombNum() <= 0) mPhase = CHANGE_PLAYER;
+            if(mCurrentPlayer->GetPendingBombNum() <= 0) mPhase = DELETE_CURSOR;
             else
             {
                 if(mCurrentPlayer->GetPlayerType() == MANUAL_PLAYER) mPhase = MANUAL_WHETHER_SET_BOMB;
@@ -206,8 +207,8 @@ void TurnManager::UpdateActor(float deltaTime)
             {
                 int timeLimit = mCurrentPlayer->ChooseTimeLimit();
                 if(timeLimit != 0) SetBomb(timeLimit);
+                mPhase = DELETE_CURSOR;
             }
-            mPhase = DELETE_CURSOR;
             break;
 
         case CHANGE_PLAYER :

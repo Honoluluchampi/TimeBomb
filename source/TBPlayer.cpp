@@ -94,3 +94,9 @@ void TBPlayer::SetDestinationField(class Field *field)
     mForwardVec = mDestinationField->GetPosition() - mCurrentField->GetPosition();
     mForwardVec.Normalize();
 }
+
+void TBPlayer::DeleteSprite()
+{
+    delete mBallSprite;
+    delete mShadowSprite;
+}

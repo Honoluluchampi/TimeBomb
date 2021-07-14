@@ -36,6 +36,7 @@ public:
     void ChangeCurrentField(class Field *field);
     // true:delete false:alive
     bool CheckHitPoint();
+    void DeleteSprite();
 
     // CHOOSING FIELD
     virtual class Field* ChooseField(std::vector<class Field*> candFields){return nullptr;}
