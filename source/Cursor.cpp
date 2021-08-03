@@ -12,8 +12,8 @@ Actor(game), mManager(manager)
     this->SetPosition(mPointingField->GetPosition());
 
     SpriteComponent* sc = new SpriteComponent(this, 60);
-    if(turn) sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/red_cursor.png"));
-    else sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/blue_cursor.png"));
+    if(turn) sc->SetTexture(game->GetTexture("Assets/red_cursor.png"));
+    else sc->SetTexture(game->GetTexture("Assets/blue_cursor.png"));
 }
 
 Cursor::~Cursor()

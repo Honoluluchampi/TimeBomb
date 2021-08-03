@@ -38,7 +38,7 @@ void Game::LoadData()
 
   // create TurnManager
   mTurnManager = new TurnManager(this, mTBPlayer1, mTBPlayer2);
-  std::cout << this << std::endl;
+  //std::cout << this << std::endl;
 }
 
 void Game::UnloadData()

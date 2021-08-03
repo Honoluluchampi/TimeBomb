@@ -44,8 +44,8 @@ Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_
     SetNumberSprite(mRemainingBombNum2, INITIAL_PENDING_BOMB_NUM);
     SetNumberSprite(mRemainingLifeNum1, INITIAL_HIT_POINT);
     SetNumberSprite(mRemainingLifeNum2, INITIAL_HIT_POINT);
-    mBombString->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Documents/study/2021_S_lecture_materials/programming_exercise/final_assignment/Assets/bomb_string.PNG"));
-    mLifeString->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Documents/study/2021_S_lecture_materials/programming_exercise/final_assignment/Assets/life_string.PNG"));
+    mBombString->SetTexture(GetGame()->GetTexture("Assets/bomb_string.png"));
+    mLifeString->SetTexture(GetGame()->GetTexture("Assets/life_string.png"));
 
     // SET SCALE
     mBombString->SetScale(STRING_SCALE);
@@ -76,13 +76,13 @@ void TurnManager::UpdateActor(float deltaTime)
         case GET_CANDIDATE_FIELDS :
             mCandFields = GetCandFields(GetGame()->GetFields(), mCurrentPlayer->GetCurrentField());
             mPhase = CREATE_CURSOR;
-            std::cout << "get_cand_fields" << std::endl;
+            //std::cout << "get_cand_fields" << std::endl;
             break;
 
         case CREATE_CURSOR :
             mCursor = new Cursor(this->GetGame(), this, mTurn);
             mPhase = CREATE_CAND_FIELD_SPRITE;
-            std::cout << "create_cursor" << std::endl;
+            //std::cout << "create_cursor" << std::endl;
             break;
 
         case CREATE_CAND_FIELD_SPRITE :
@@ -93,7 +93,7 @@ void TurnManager::UpdateActor(float deltaTime)
             // CHOOSE MACUALY ONLY IF PALYER IS MANUAL
             if(mCurrentPlayer->GetPlayerType() == MANUAL_PLAYER) mPhase = MANUAL_CHOOSE_FIELD;
             else mPhase = AUTOMATIC_CHOOSE_FIELD;
-            std::cout << "create_cand_field_sprite" << std::endl;
+            //std::cout << "create_cand_field_sprite" << std::endl;
             break;
 
         case AUTOMATIC_CHOOSE_FIELD :
@@ -105,10 +105,10 @@ void TurnManager::UpdateActor(float deltaTime)
             break;
 
         case DELETE_CURSOR :
-            std::cout << "chooose_and_mobe_fields" << std::endl;
+            //std::cout << "chooose_and_mobe_fields" << std::endl;
             delete mCursor;
             mPhase = CHANGE_PLAYER;
-            std::cout << "delete_cursor" << std::endl;
+            //std::cout << "delete_cursor" << std::endl;
             break;
 
         case DELETE_CAND_FIELD_SPITE :
@@ -118,7 +118,7 @@ void TurnManager::UpdateActor(float deltaTime)
             }
             mCurrentPlayer->SetIsMoving(true);
             mPhase = MOVE_TO_DESTINATION_FIELD;
-            std::cout << "delete_cand_fields_sprite" << std::endl;
+            //std::cout << "delete_cand_fields_sprite" << std::endl;
             break;
 
         case MOVE_TO_DESTINATION_FIELD :
@@ -130,12 +130,12 @@ void TurnManager::UpdateActor(float deltaTime)
             {
                 if(bomb->GetBombOwner() == mOppositePlayer)
                 {
-                    std::cout << "dec" << std::endl;
+                    //std::cout << "dec" << std::endl;
                     bomb->DecrementCount();
                 }
             }
             mPhase = CHECK_BOMB_COUNT;
-            std::cout << "decreametn bomb" << std::endl;
+            //std::cout << "decreametn bomb" << std::endl;
             break;
 
         case CHECK_BOMB_COUNT :
@@ -200,7 +200,7 @@ void TurnManager::UpdateActor(float deltaTime)
                 if(mCurrentPlayer->GetPlayerType() == MANUAL_PLAYER) mPhase = MANUAL_WHETHER_SET_BOMB;
                 else mPhase = AUTOMATIC_WHETHER_SET_BOMB;
             }
-            std::cout << "check_bomb_count" << std::endl;
+            //std::cout << "check_bomb_count" << std::endl;
             break;
 
         case AUTOMATIC_WHETHER_SET_BOMB :
@@ -215,7 +215,7 @@ void TurnManager::UpdateActor(float deltaTime)
             std::swap(mCurrentPlayer, mOppositePlayer);
             mTurn = !mTurn;
             mPhase = DISTRIBUTE_BOMB;
-            std::cout << "change_plyaer" << std::endl;
+            //std::cout << "change_plyaer" << std::endl;
             break;
 
         default :
@@ -236,7 +236,7 @@ void TurnManager::ActorInput(SDL_Event &event)
             break;
 
         case ENDING :
-            std::cout << "ending" << std::endl;
+            //std::cout << "ending" << std::endl;
             GetGame()->SetIsRunning(false);
             break;
     }
@@ -325,19 +325,19 @@ void TurnManager::SetNumberSprite(SpriteComponent* sc, int num)
     assert(sc != nullptr);
     switch(num){
         case 0 :
-            sc->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/zero.png"));
+            sc->SetTexture(GetGame()->GetTexture("Assets/zero.png"));
             break;
         case 1 : 
-            sc->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/one.png"));
+            sc->SetTexture(GetGame()->GetTexture("Assets/one.png"));
             break;
         case 2 : 
-            sc->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/two.png"));
+            sc->SetTexture(GetGame()->GetTexture("Assets/two.png"));
             break;
         case 3 : 
-            sc->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/three.png"));
+            sc->SetTexture(GetGame()->GetTexture("Assets/three.png"));
             break;
         case 4 : 
-            sc->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/four.png"));
+            sc->SetTexture(GetGame()->GetTexture("Assets/four.png"));
             break;
         default :
             break;

@@ -9,7 +9,7 @@ Path::Path(Game *game, Field *nord1, Field *nord2)
 {
     if(mNord1->GetPosition().y < mNord2->GetPosition().y) std::swap(mNord1, mNord2);
     SpriteComponent *sc = new SpriteComponent(this, 30, MANUAL_POSITIONING, MANUAL_SCALING);
-    sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/green_path.png"));
+    sc->SetTexture(game->GetTexture("Assets/green_path.png"));
     auto pos = mNord1->GetPosition() + mNord2->GetPosition() + PATH_SLIDE;
     pos.x /= 2.0f; pos.y /= 2.0f;
     float rotation;

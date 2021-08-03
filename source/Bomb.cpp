@@ -10,7 +10,7 @@ Actor(game), mReadyToExplode(false), mBombOwner(owner), mField(field), mIsVisibl
 {
     // bomb sprite
     SpriteComponent *sc = new SpriteComponent(this, 130);
-    sc->SetTexture(game->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/bomb.png"));
+    sc->SetTexture(game->GetTexture("Assets/bomb.png"));
     
     // coutn sprite
     SetCount(count);
@@ -28,8 +28,6 @@ Actor(game), mReadyToExplode(false), mBombOwner(owner), mField(field), mIsVisibl
 Bomb::~Bomb()
 {
     // explosion
-    
-    std::cout << "Deconstruct bomb " << std::endl;
     GetGame()->RemoveSettedBomb(this);
 }
 
@@ -37,16 +35,16 @@ void Bomb::SetCountSprite()
 {
     switch(mCount){
         case 1 : 
-            mCountSprite->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/one.png"));
+            mCountSprite->SetTexture(GetGame()->GetTexture("Assets/one.png"));
             break;
         case 2 : 
-            mCountSprite->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/two.png"));
+            mCountSprite->SetTexture(GetGame()->GetTexture("Assets/two.png"));
             break;
         case 3 : 
-            mCountSprite->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/three.png"));
+            mCountSprite->SetTexture(GetGame()->GetTexture("Assets/three.png"));
             break;
         case 4 : 
-            mCountSprite->SetTexture(GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/four.png"));
+            mCountSprite->SetTexture(GetGame()->GetTexture("Assets/four.png"));
             break;
         default :
             break;
@@ -56,7 +54,6 @@ void Bomb::SetCountSprite()
 void Bomb::DecrementCount()
 {
     mCount--;
-    std::cout << "decrement" << std::endl;
     if(mIsVisible) SetCountSprite();
 }
 

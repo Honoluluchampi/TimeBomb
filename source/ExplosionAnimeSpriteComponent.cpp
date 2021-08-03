@@ -10,26 +10,26 @@ ExplosionAnimSpriteComponent::ExplosionAnimSpriteComponent(Actor *owner, int dra
 {
     if(isBlue){
         std::vector<SDL_Texture*> anims = {
-            owner->GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/explosion_blue1.PNG"),
-            owner->GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/explosion_blue2.PNG"),
-            owner->GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/explosion_blue3.PNG"),
-            owner->GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/explosion_blue4.PNG"),
-            owner->GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/explosion_blue5.PNG"),
-            owner->GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/explosion_blue6.PNG"),
-            owner->GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/explosion_blue7.PNG")
+            owner->GetGame()->GetTexture("Assets/explosion_blue1.PNG"),
+            owner->GetGame()->GetTexture("Assets/explosion_blue2.PNG"),
+            owner->GetGame()->GetTexture("Assets/explosion_blue3.PNG"),
+            owner->GetGame()->GetTexture("Assets/explosion_blue4.PNG"),
+            owner->GetGame()->GetTexture("Assets/explosion_blue5.PNG"),
+            owner->GetGame()->GetTexture("Assets/explosion_blue6.PNG"),
+            owner->GetGame()->GetTexture("Assets/explosion_blue7.PNG")
         };
         this->SetAnimTextures(anims);
     }
     else
     {
         std::vector<SDL_Texture*> anims = {
-            owner->GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/explosion_red1.PNG"),
-            owner->GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/explosion_red2.PNG"),
-            owner->GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/explosion_red3.PNG"),
-            owner->GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/explosion_red4.PNG"),
-            owner->GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/explosion_red5.PNG"),
-            owner->GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/explosion_red6.PNG"),
-            owner->GetGame()->GetTexture("/Users/toyotariku/Library/Mobile Documents/com~apple~CloudDocs/TimeBomb/explosion_red7.PNG")
+            owner->GetGame()->GetTexture("Assets/explosion_red1.PNG"),
+            owner->GetGame()->GetTexture("Assets/explosion_red2.PNG"),
+            owner->GetGame()->GetTexture("Assets/explosion_red3.PNG"),
+            owner->GetGame()->GetTexture("Assets/explosion_red4.PNG"),
+            owner->GetGame()->GetTexture("Assets/explosion_red5.PNG"),
+            owner->GetGame()->GetTexture("Assets/explosion_red6.PNG"),
+            owner->GetGame()->GetTexture("Assets/explosion_red7.PNG")
         };
         this->SetAnimTextures(anims);
     }
