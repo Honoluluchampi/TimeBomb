@@ -1,7 +1,6 @@
 TARGET = timebomb
 SRCROOT = ./source
 SOURCES = $(wildcard $(SRCROOT)/*.cpp)
-#main.cpp Game.cpp Actor.cpp Component.cpp SpriteComponent.cpp Field.cpp Math.cpp TBPlayer.cpp TurnManager.cpp Cursor.cpp Path.cpp Bomb.cpp AnimeSpriteComponent.cpp ExplosionAnimeSpriteComponent.cpp Players.cpp
 
 COMPILER  = g++
 CFLAGS    = -Wall -std=c++17 -MMD -MP -g3
