@@ -2,6 +2,7 @@
 #include <vector>
 #include "Math.h"
 #include <SDL2/SDL.h>
+#include <memory>
 
 class Actor
 {
@@ -14,7 +15,7 @@ public:
     EDead
   };
   // Constractor and Destractor
-  Actor(class Game *game); // choose Game object which the actor belongs to.
+  Actor(std::unique_ptr<class Game>& game); // choose Game object which the actor belongs to.
   virtual ~Actor();
   
   // update function called by game object
@@ -43,7 +44,7 @@ public:
   State GetState() const {return mState;}
   void SetState(State state) { mState = state; }
   
-  class Game* GetGame() { return mGame;}
+  std::unique_ptr<class Game>& GetGame() { return upGame_m;}
   
   // manage componets
   void AddComponent(class Component *component);
@@ -58,5 +59,5 @@ private:
   
   // Actors Component
   std::vector<class Component*> mComponents;
-  class Game* mGame;
+  std::unique_ptr<class Game>& upGame_m;
 };

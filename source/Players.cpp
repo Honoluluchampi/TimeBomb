@@ -2,7 +2,7 @@
 #include "Game.h"
 #include <random>
 
-RandomPlayer::RandomPlayer(class Game* game, class Field* ip, bool player, const int &bombnum, int playerType)
+RandomPlayer::RandomPlayer(std::unique_ptr<Game>& game, Field* ip, bool player, const int &bombnum, int playerType)
 : TBPlayer(game, ip, player, bombnum, playerType)
 {}
 

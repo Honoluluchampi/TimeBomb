@@ -1,10 +1,10 @@
 #pragma once
 #include "Actor.h"
-
+#include <memory>
 class Bomb : public Actor
 {
 public:
-    Bomb(class Game* game, class TBPlayer* owner, class Field *field, int &count, bool visible);
+    Bomb(std::unique_ptr<class Game>& game, class TBPlayer* owner, class Field *field, int &count, bool visible);
     ~Bomb();
 
     // change count function

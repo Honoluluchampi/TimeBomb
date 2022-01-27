@@ -7,7 +7,7 @@
 #include <cmath>
 #include <iostream>
 
-TBPlayer::TBPlayer(Game *game, Field *ip, bool player, const int &bombnum, int playerType) : 
+TBPlayer::TBPlayer(std::unique_ptr<Game>& game, Field *ip, bool player, const int &bombnum, int playerType) : 
 Actor(game),  mHitPoint(INITIAL_HIT_POINT), mCurrentField(ip), mIsMoving(false), mTime(0.0f), mPlayerType(playerType)
 {
     // ball sprite

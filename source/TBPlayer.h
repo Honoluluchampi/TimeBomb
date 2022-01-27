@@ -1,6 +1,7 @@
 #pragma once
 #include "Actor.h"
 #include "Math.h"
+#include <memory>
 
 enum PlayerType
 {
@@ -11,7 +12,7 @@ enum PlayerType
 class TBPlayer : public Actor
 {
 public:
-    TBPlayer(class Game* game, class Field* ip, bool player, const int &bombnum, int playerType = 0); // ip : initial position
+    TBPlayer(std::unique_ptr<class Game>& game, class Field* ip, bool player, const int &bombnum, int playerType = 0); // ip : initial position
     ~TBPlayer(); // call the ending manager
 
     void UpdateActor(float deltaTime);

@@ -5,15 +5,15 @@
 #include <cassert>
 #include <iostream>
 
-Actor::Actor(Game *game)
-  :mState(EActive), mPosition(Vector2::Zero), mScale(1.0f), mRotation(0.0f), mGame(game)
+Actor::Actor(std::unique_ptr<Game>& game)
+  :mState(EActive), mPosition(Vector2::Zero), mScale(1.0f), mRotation(0.0f), upGame_m(game)
 {
-  mGame -> AddActor(this);
+  upGame_m -> AddActor(this);
 }
 
 Actor::~Actor()
 {
-  mGame->RemoveActor(this);
+  upGame_m->RemoveActor(this);
   while(!mComponents.empty())
   {
     delete mComponents.back();

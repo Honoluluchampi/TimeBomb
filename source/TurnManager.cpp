@@ -15,7 +15,7 @@
 #include "ExplosionAnimeSpriteComponent.h"
 #include "Actor.h"
 
-TurnManager::TurnManager(Game *game, TBPlayer *player1, TBPlayer *player2) : 
+TurnManager::TurnManager(std::unique_ptr<Game>& game, TBPlayer* player1, TBPlayer* player2) : 
 Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_CANDIDATE_FIELDS), mDistributeBomb(1)
 {
     // player1 plays first

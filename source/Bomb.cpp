@@ -5,7 +5,7 @@
 #include "Field.h"
 #include <iostream>
 
-Bomb::Bomb(Game *game, TBPlayer *owner, Field *field, int &count, bool visible) : 
+Bomb::Bomb(std::unique_ptr<Game>& game, TBPlayer *owner, Field *field, int &count, bool visible) : 
 Actor(game), mReadyToExplode(false), mBombOwner(owner), mField(field), mIsVisible(visible)
 {
     // bomb sprite

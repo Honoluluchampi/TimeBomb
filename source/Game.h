@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <unordered_map>
 #include <string>
+#include <memory>
 #include <vector>
 #include "Math.h"
 
@@ -69,6 +70,8 @@ public:
   
   // Constracter
   Game();
+  // get the reference to std::unique_ptr of this
+  void GetOwnOwnership(std::unique_ptr<Game>& upGame);
   
   // Initializer
   bool Initialize();
@@ -112,6 +115,8 @@ private:
   void LoadData();
   void UnloadData();
   
+  // Ownership of its own
+  std::unique_ptr<Game>* pupGame_m;
   // map of textures
   std::unordered_map<std::string, SDL_Texture*> mTextures;
   

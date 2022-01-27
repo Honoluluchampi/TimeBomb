@@ -2,14 +2,15 @@
 #include "Actor.h"
 #include "SpriteComponent.h"
 #include <vector>
+#include <memory>
 
 class Field : public Actor
 {
 public:
-    Field(class Game* game, float x, float y);
+    Field(std::unique_ptr<class Game>& game, float x, float y);
     ~Field();
     // floating move ?
-    void CreateCandSprite(class Game *game, bool turn);
+    void CreateCandSprite(std::unique_ptr<class Game>& game, bool turn);
     void DeleteCandSprite();
 
 private:

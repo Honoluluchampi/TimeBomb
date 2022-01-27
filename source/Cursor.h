@@ -1,10 +1,10 @@
 #pragma once
 #include "Actor.h"
-
+#include <memory>
 class Cursor : public Actor
 {
 public:
-    Cursor(class Game *game, class TurnManager *manager, bool turn);
+    Cursor(std::unique_ptr<class Game>& game, class TurnManager *manager, bool turn);
     ~Cursor();
 
     void ChangePointingField(class Field *field);

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <memory>
 #include "Actor.h"
 
 enum Phase
@@ -27,7 +28,7 @@ enum Phase
 class TurnManager : public Actor
 {
 public:
-    TurnManager(class Game* game, class TBPlayer* player1, class TBPlayer* player2);
+    TurnManager(std::unique_ptr<class Game>& game, class TBPlayer* player1, class TBPlayer* player2);
     ~TurnManager();
 
     // turn over the turn

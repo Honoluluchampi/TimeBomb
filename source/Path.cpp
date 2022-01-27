@@ -4,7 +4,7 @@
 #include "Game.h"
 #include <cmath>
 
-Path::Path(Game *game, Field *nord1, Field *nord2)
+Path::Path(std::unique_ptr<Game>& game, Field *nord1, Field *nord2)
 :Actor(game), mNord1(nord1), mNord2(nord2), mWeight(DEFAULT_HEAVY_WEIGHT)
 {
     if(mNord1->GetPosition().y < mNord2->GetPosition().y) std::swap(mNord1, mNord2);

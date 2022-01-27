@@ -6,7 +6,7 @@
 #include "Path.h"
 #include <algorithm>
 
-Field::Field(Game *game, float x, float y) : Actor(game)
+Field::Field(std::unique_ptr<Game>& game, float x, float y) : Actor(game)
 {
     SetPosition(Vector2(x,y));
     SetRotation(0);
@@ -29,7 +29,7 @@ Field::~Field()
     }
 }
 
-void Field::CreateCandSprite(Game *game, bool turn)
+void Field::CreateCandSprite(std::unique_ptr<Game>& game, bool turn)
 {
     //cand sprite component
     mTemporalCandSprite = new SpriteComponent(this, 55);

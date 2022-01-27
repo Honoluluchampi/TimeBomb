@@ -4,7 +4,7 @@
 #include "TurnManager.h"
 #include "TBPlayer.h"
 
-Cursor::Cursor(Game *game, TurnManager *manager, bool turn) : //TurnManager *manager) : 
+Cursor::Cursor(std::unique_ptr<Game>& game, TurnManager *manager, bool turn) : //TurnManager *manager) : 
 Actor(game), mManager(manager)
 {
     // get current field

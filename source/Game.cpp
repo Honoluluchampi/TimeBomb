@@ -17,28 +17,33 @@ Game::Game()
 {
 }
 
+void Game::GetOwnOwnership(std::unique_ptr<Game>& upGame)
+{
+  pupGame_m = &upGame;
+}
+
 // Game specific _______________________________
 void Game::LoadData()
 {
   // create field
   for(auto vec : FIELD_POSITION)
   {
-    new Field(this, vec.x, vec.y);
+    new Field(*pupGame_m, vec.x, vec.y);
   }
 
   // create path
   for(auto path : PATH_EDGES)
   {
-    new Path(this, mFields[path.first], mFields[path.second]);
+    new Path(*pupGame_m, mFields[path.first], mFields[path.second]);
   }
 
   // create players
-  mTBPlayer1 = new TBPlayer(this, mFields[INITIAL_FIELD_FOR_1], true, INITIAL_PENDING_BOMB_NUM, MANUAL_PLAYER);
-  mTBPlayer2 = new RandomPlayer(this, mFields[INITIAL_FIELD_FOR_2], false, INITIAL_PENDING_BOMB_NUM, RANDOM_PLAYER);
+  mTBPlayer1 = new TBPlayer(*pupGame_m, mFields[INITIAL_FIELD_FOR_1], true, INITIAL_PENDING_BOMB_NUM, MANUAL_PLAYER);
+  mTBPlayer2 = new RandomPlayer(*pupGame_m, mFields[INITIAL_FIELD_FOR_2], false, INITIAL_PENDING_BOMB_NUM, RANDOM_PLAYER);
 
   // create TurnManager
-  mTurnManager = new TurnManager(this, mTBPlayer1, mTBPlayer2);
-  //std::cout << this << std::endl;
+  mTurnManager = new TurnManager(*pupGame_m, mTBPlayer1, mTBPlayer2);
+  //std::cout <<(*pupGame_m << std::endl;
 }
 
 void Game::UnloadData()

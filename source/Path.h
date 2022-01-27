@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.h"
+#include <memory>
 
 const int DEFAULT_WEIGHT = 1;
 const int DEFAULT_HEAVY_WEIGHT = 10000;
@@ -7,7 +8,7 @@ const int DEFAULT_HEAVY_WEIGHT = 10000;
 class Path : public Actor
 {
 public:
-    Path(class Game *game, class Field *nord1, class Field *nord2);
+    Path(std::unique_ptr<class Game>& game, class Field *nord1, class Field *nord2);
     ~Path();
 
     void ChangeWeightHeavier(int weight = DEFAULT_HEAVY_WEIGHT){mWeight = weight;}
