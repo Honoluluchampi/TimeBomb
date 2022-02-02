@@ -1,14 +1,14 @@
 #include <iostream>
+#include <memory>
 #include "Game.h"
 
 int main(int argc, const char * argv[])
 {
-  Game game;
-  bool success = game.Initialize();
+  auto game = std::make_unique<Game>();
+  bool success = game->Initialize();
   if(success)
   {
-    game.RunLoop();
+    game->RunLoop();
   }
-  game.Shutdown();
-  return 0;
+  game->Shutdown();
 }
