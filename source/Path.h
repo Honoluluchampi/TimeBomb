@@ -7,7 +7,7 @@ const int DEFAULT_HEAVY_WEIGHT = 10000;
 class Path : public Actor
 {
 public:
-    Path(class Game *game, class Field *nord1, class Field *nord2);
+    Path(class TimeBombApp *game, class Field *nord1, class Field *nord2);
     ~Path();
 
     void ChangeWeightHeavier(int weight = DEFAULT_HEAVY_WEIGHT){mWeight = weight;}
@@ -16,6 +16,7 @@ public:
     class Field* GetNord2(){return mNord2;}
 
 private:
+    class TimeBombApp *mApp;
     class Field *mNord1;
     class Field *mNord2;
     int mWeight;

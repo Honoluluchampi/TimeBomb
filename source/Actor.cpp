@@ -25,7 +25,6 @@ void Actor::Update(float deltaTime)
   if(mState == EActive)
   {
     UpdateComponents(deltaTime);
-    //std::cout << this << std::endl;
     UpdateActor(deltaTime);
   }
 }

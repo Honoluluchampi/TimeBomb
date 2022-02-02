@@ -3,11 +3,12 @@
 #include "Bomb.h"
 #include "SpriteComponent.h"
 #include "Field.h"
+#include "TimeBombApp.h"
 #include <algorithm>
 #include <cmath>
 #include <iostream>
 
-TBPlayer::TBPlayer(Game *game, Field *ip, bool player, const int &bombnum, int playerType) : 
+TBPlayer::TBPlayer(TimeBombApp *game, Field *ip, bool player, const int &bombnum, int playerType) : 
 Actor(game),  mHitPoint(INITIAL_HIT_POINT), mCurrentField(ip), mIsMoving(false), mTime(0.0f), mPlayerType(playerType)
 {
     // ball sprite
@@ -60,8 +61,8 @@ void TBPlayer::SetBomb(int count, bool visible)
         return;
     }
     mPendingBombNum--;
-    Bomb *bomb = new Bomb(GetGame(), this, mCurrentField, count, visible);
-    GetGame()->AddSettedBomb(bomb);
+    Bomb *bomb = new Bomb(mApp, this, mCurrentField, count, visible);
+    mApp->AddSettedBomb(bomb);
 }
 
 bool TBPlayer::CheckHitPoint()

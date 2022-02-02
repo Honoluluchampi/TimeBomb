@@ -1,12 +1,13 @@
 #include "Bomb.h"
 #include "Game.h"
+#include "TimeBombApp.h"
 #include "TBPlayer.h"
 #include "SpriteComponent.h"
 #include "Field.h"
 #include <iostream>
 
-Bomb::Bomb(Game *game, TBPlayer *owner, Field *field, int &count, bool visible) : 
-Actor(game), mReadyToExplode(false), mBombOwner(owner), mField(field), mIsVisible(visible)
+Bomb::Bomb(TimeBombApp *game, TBPlayer *owner, Field *field, int &count, bool visible) : 
+Actor(game), mApp(game), mReadyToExplode(false), mBombOwner(owner), mField(field), mIsVisible(visible)
 {
     // bomb sprite
     SpriteComponent *sc = new SpriteComponent(this, 130);
@@ -28,7 +29,7 @@ Actor(game), mReadyToExplode(false), mBombOwner(owner), mField(field), mIsVisibl
 Bomb::~Bomb()
 {
     // explosion
-    GetGame()->RemoveSettedBomb(this);
+    mApp->RemoveSettedBomb(this);
 }
 
 void Bomb::SetCountSprite()

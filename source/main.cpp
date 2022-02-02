@@ -1,14 +1,14 @@
 #include <iostream>
 #include <memory>
-#include "Game.h"
+#include "TimeBombApp.h"
 
 int main(int argc, const char * argv[])
 {
-  auto game = std::make_unique<Game>();
-  bool success = game->Initialize();
+  auto app = std::make_unique<TimeBombApp>();
+  bool success = app->Initialize();
   if(success)
   {
-    game->RunLoop();
+    app->RunLoop();
   }
-  game->Shutdown();
+  app->Shutdown();
 }
