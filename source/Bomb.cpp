@@ -6,7 +6,7 @@
 #include "Field.h"
 #include <iostream>
 
-Bomb::Bomb(TimeBombApp *game, TBPlayer *owner, Field *field, int &count, bool visible) : 
+Bomb::Bomb(TimeBombApp *game, TBPlayer *owner, Field *field, int count, bool visible) : 
 Actor(game), mApp(game), mReadyToExplode(false), mBombOwner(owner), mField(field), mIsVisible(visible)
 {
     // bomb sprite
@@ -21,9 +21,6 @@ Actor(game), mApp(game), mReadyToExplode(false), mBombOwner(owner), mField(field
     // position, rotation
     SetPosition(mField->GetPosition());
     SetRotation(mField->GetRotation());
-
-    // add in turnmanager::setbomb
-    //game->AddSettedBomb(this);
 }
 
 Bomb::~Bomb()

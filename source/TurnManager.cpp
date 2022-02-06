@@ -131,12 +131,10 @@ void TurnManager::UpdateActor(float deltaTime)
             {
                 if(bomb->GetBombOwner() == mOppositePlayer)
                 {
-                    //std::cout << "dec" << std::endl;
                     bomb->DecrementCount();
                 }
             }
             mPhase = CHECK_BOMB_COUNT;
-            //std::cout << "decreametn bomb" << std::endl;
             break;
 
         case CHECK_BOMB_COUNT :
@@ -173,7 +171,7 @@ void TurnManager::UpdateActor(float deltaTime)
                             CreateExplosionAnim(path->GetNord1());
                         }
                     }
-                    delete bomb;
+                    bomb->SetState(EDead);
                 }
             }
             mPhase = EXPLOSION_ANIM;
