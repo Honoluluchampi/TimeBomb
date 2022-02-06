@@ -27,7 +27,7 @@ enum Phase
 class TurnManager : public Actor
 {
 public:
-    TurnManager(class Game* game, class TBPlayer* player1, class TBPlayer* player2);
+    TurnManager(class TimeBombApp* game, class TBPlayer* player1, class TBPlayer* player2);
     ~TurnManager();
 
     // turn over the turn
@@ -52,6 +52,7 @@ public:
     void AddExplosionAnim(class ExplosionAnimSpriteComponent *ea);
     void RemoveExplosionAnim(class ExplosionAnimSpriteComponent* ea);
 private:
+    class TimeBombApp* mApp;
     class TBPlayer* mPlayer1;
     class TBPlayer* mPlayer2;
     class TBPlayer* mCurrentPlayer;

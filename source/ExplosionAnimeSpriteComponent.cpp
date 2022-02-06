@@ -3,6 +3,7 @@
 #include "Actor.h"
 #include "Game.h"
 #include "TurnManager.h"
+#include "TimeBombApp.h"
 #include <iostream>
 
 ExplosionAnimSpriteComponent::ExplosionAnimSpriteComponent(Actor *owner, int drawOrder, bool isBlue, class TurnManager* tm)

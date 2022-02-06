@@ -2,7 +2,7 @@
 #include "Game.h"
 #include <random>
 
-RandomPlayer::RandomPlayer(class Game* game, class Field* ip, bool player, const int &bombnum, int playerType)
+RandomPlayer::RandomPlayer(class TimeBombApp* game, class Field* ip, bool player, const int &bombnum, int playerType)
 : TBPlayer(game, ip, player, bombnum, playerType)
 {}
 

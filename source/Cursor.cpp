@@ -1,10 +1,10 @@
 #include "Cursor.h"
-#include "Game.h"
+#include "TimeBombApp.h"
 #include "Field.h"
 #include "TurnManager.h"
 #include "TBPlayer.h"
 
-Cursor::Cursor(Game *game, TurnManager *manager, bool turn) : //TurnManager *manager) : 
+Cursor::Cursor(TimeBombApp *game, TurnManager *manager, bool turn) : //TurnManager *manager) : 
 Actor(game), mManager(manager)
 {
     // get current field

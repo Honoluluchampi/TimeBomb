@@ -4,7 +4,8 @@
 class Bomb : public Actor
 {
 public:
-    Bomb(class Game* game, class TBPlayer* owner, class Field *field, int &count, bool visible);
+    Bomb(class TimeBombApp* app, class TBPlayer* owner,
+     class Field *field, int &count, bool visible);
     ~Bomb();
 
     // change count function
@@ -18,6 +19,7 @@ public:
     bool CheckBombCount();
     
 private:
+    class TimeBombApp* mApp;
     int mCount;
     bool mReadyToExplode;
     class TBPlayer* mBombOwner;

@@ -4,9 +4,10 @@
 #include "Math.h"
 #include <string>
 #include "Path.h"
+#include "TimeBombApp.h"
 #include <algorithm>
 
-Field::Field(Game *game, float x, float y) : Actor(game)
+Field::Field(TimeBombApp *game, float x, float y) : Actor(game), mApp(game)
 {
     SetPosition(Vector2(x,y));
     SetRotation(0);
@@ -14,17 +15,17 @@ Field::Field(Game *game, float x, float y) : Actor(game)
     SpriteComponent* sc = new SpriteComponent(this, 50);
     sc->SetTexture(game->GetTexture("Assets/green_field.png"));
 
-    game -> AddField(this);
+    mApp -> AddField(this);
 }
 
 Field::~Field()
 {
-    GetGame()->RemoveField(this);
-    for(auto path : GetGame()->GetPaths())
+    mApp->RemoveField(this);
+    for(auto path : mApp->GetPaths())
     {
         if(path->GetNord1() == this || path->GetNord2() == this)
         {
-            GetGame()->RemovePath(path);
+            mApp->RemovePath(path);
         }
     }
 }

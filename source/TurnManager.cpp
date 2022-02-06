@@ -1,5 +1,5 @@
 #include "TurnManager.h"
-#include "Game.h"
+#include "TimeBombApp.h"
 #include "TBPlayer.h"
 #include "Field.h"
 #include "Cursor.h"
@@ -15,8 +15,9 @@
 #include "ExplosionAnimeSpriteComponent.h"
 #include "Actor.h"
 
-TurnManager::TurnManager(Game *game, TBPlayer *player1, TBPlayer *player2) : 
-Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_CANDIDATE_FIELDS), mDistributeBomb(1)
+TurnManager::TurnManager(TimeBombApp *game, TBPlayer *player1, TBPlayer *player2) : 
+Actor(game), mApp(game), mPlayer1(player1), mPlayer2(player2),
+mCursor(nullptr), mPhase(GET_CANDIDATE_FIELDS), mDistributeBomb(1)
 {
     // player1 plays first
     mCurrentPlayer = mPlayer1;
@@ -44,8 +45,8 @@ Actor(game), mPlayer1(player1), mPlayer2(player2), mCursor(nullptr), mPhase(GET_
     SetNumberSprite(mRemainingBombNum2, INITIAL_PENDING_BOMB_NUM);
     SetNumberSprite(mRemainingLifeNum1, INITIAL_HIT_POINT);
     SetNumberSprite(mRemainingLifeNum2, INITIAL_HIT_POINT);
-    mBombString->SetTexture(GetGame()->GetTexture("Assets/bomb_string.png"));
-    mLifeString->SetTexture(GetGame()->GetTexture("Assets/life_string.png"));
+    mBombString->SetTexture(mApp->GetTexture("Assets/bomb_string.png"));
+    mLifeString->SetTexture(mApp->GetTexture("Assets/life_string.png"));
 
     // SET SCALE
     mBombString->SetScale(STRING_SCALE);
@@ -74,13 +75,13 @@ void TurnManager::UpdateActor(float deltaTime)
             break;
 
         case GET_CANDIDATE_FIELDS :
-            mCandFields = GetCandFields(GetGame()->GetFields(), mCurrentPlayer->GetCurrentField());
+            mCandFields = GetCandFields(mApp->GetFields(), mCurrentPlayer->GetCurrentField());
             mPhase = CREATE_CURSOR;
             //std::cout << "get_cand_fields" << std::endl;
             break;
 
         case CREATE_CURSOR :
-            mCursor = new Cursor(this->GetGame(), this, mTurn);
+            mCursor = new Cursor(mApp, this, mTurn);
             mPhase = CREATE_CAND_FIELD_SPRITE;
             //std::cout << "create_cursor" << std::endl;
             break;
@@ -88,7 +89,7 @@ void TurnManager::UpdateActor(float deltaTime)
         case CREATE_CAND_FIELD_SPRITE :
             for(auto field : mCandFields)
             {
-                field->CreateCandSprite(this->GetGame(), mTurn);
+                field->CreateCandSprite(this->mApp, mTurn);
             }
             // CHOOSE MACUALY ONLY IF PALYER IS MANUAL
             if(mCurrentPlayer->GetPlayerType() == MANUAL_PLAYER) mPhase = MANUAL_CHOOSE_FIELD;
@@ -126,7 +127,7 @@ void TurnManager::UpdateActor(float deltaTime)
             else mPhase = DECREMENT_OPPOSITE_PLAYERS_BOMB;
 
         case DECREMENT_OPPOSITE_PLAYERS_BOMB :
-            for(auto bomb : GetGame()->GetSettedBombs())
+            for(auto bomb : mApp->GetSettedBombs())
             {
                 if(bomb->GetBombOwner() == mOppositePlayer)
                 {
@@ -139,7 +140,7 @@ void TurnManager::UpdateActor(float deltaTime)
             break;
 
         case CHECK_BOMB_COUNT :
-            for(auto bomb : GetGame()->GetSettedBombs())
+            for(auto bomb : mApp->GetSettedBombs())
             {
                 if(bomb->GetBombOwner() == mOppositePlayer)
                 {
@@ -155,13 +156,13 @@ void TurnManager::UpdateActor(float deltaTime)
             }
             
             // create explosion sprite 
-            for (auto bomb : GetGame()->GetSettedBombs())
+            for (auto bomb : mApp->GetSettedBombs())
             {
                 if(bomb->GetReadyToExplode())
                 {
                     CreateExplosionAnim(bomb->GetBombField());
                     // neighber s anime
-                    for(auto path : GetGame()->GetPaths())
+                    for(auto path : mApp->GetPaths())
                     {
                         if(path->GetNord1() == bomb->GetBombField()) 
                         {
@@ -237,7 +238,7 @@ void TurnManager::ActorInput(SDL_Event &event)
 
         case ENDING :
             //std::cout << "ending" << std::endl;
-            GetGame()->SetIsRunning(false);
+            mApp->SetIsRunning(false);
             break;
     }
 }
@@ -261,7 +262,7 @@ std::vector<Field*> TurnManager::GetCandFields(std::vector<Field*> fields, Field
         int value = dist[nord];
         que.pop();
         if(value >= PLAYER_STEP) continue;
-        for(auto path : GetGame()->GetPaths())
+        for(auto path : mApp->GetPaths())
         {
             Field *target;
             if(path->GetNord1() != nord && path->GetNord2() != nord) continue;
@@ -286,7 +287,7 @@ std::vector<Field*> TurnManager::GetCandFields(std::vector<Field*> fields, Field
 void TurnManager::ChooseField(SDL_Event &event)
 {
     // cursor is already created in create_cursor phase.
-    //if(mCursor == nullptr) mCursor = new Cursor(this->GetGame(), this);
+    //if(mCursor == nullptr) mCursor = new Cursor(this->mApp, this);
     switch(event.type)
     {
     case SDL_KEYDOWN:
@@ -325,19 +326,19 @@ void TurnManager::SetNumberSprite(SpriteComponent* sc, int num)
     assert(sc != nullptr);
     switch(num){
         case 0 :
-            sc->SetTexture(GetGame()->GetTexture("Assets/zero.png"));
+            sc->SetTexture(mApp->GetTexture("Assets/zero.png"));
             break;
         case 1 : 
-            sc->SetTexture(GetGame()->GetTexture("Assets/one.png"));
+            sc->SetTexture(mApp->GetTexture("Assets/one.png"));
             break;
         case 2 : 
-            sc->SetTexture(GetGame()->GetTexture("Assets/two.png"));
+            sc->SetTexture(mApp->GetTexture("Assets/two.png"));
             break;
         case 3 : 
-            sc->SetTexture(GetGame()->GetTexture("Assets/three.png"));
+            sc->SetTexture(mApp->GetTexture("Assets/three.png"));
             break;
         case 4 : 
-            sc->SetTexture(GetGame()->GetTexture("Assets/four.png"));
+            sc->SetTexture(mApp->GetTexture("Assets/four.png"));
             break;
         default :
             break;
@@ -407,7 +408,7 @@ void TurnManager::Explosion(Bomb *bomb)
         if(mTurn) SetNumberSprite(mRemainingLifeNum1, mCurrentPlayer->GetHitPoint());
         else SetNumberSprite(mRemainingLifeNum2, mCurrentPlayer->GetHitPoint());
     }
-    for(auto path : GetGame()->GetPaths())
+    for(auto path : mApp->GetPaths())
     {
         if((path->GetNord1() == bf && path->GetNord2() == tf) || (path->GetNord2() == bf && path->GetNord1() == tf))
         {

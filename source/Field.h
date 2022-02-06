@@ -6,7 +6,7 @@
 class Field : public Actor
 {
 public:
-    Field(class Game* game, float x, float y);
+    Field(class TimeBombApp* game, float x, float y);
     ~Field();
     // floating move ?
     void CreateCandSprite(class Game *game, bool turn);
@@ -15,5 +15,6 @@ public:
 private:
     // edges form this field
     //std::vector<class Path> mPaths;
+    class TimeBombApp* mApp;
     class SpriteComponent *mTemporalCandSprite;
 };
