@@ -145,7 +145,7 @@ void Game::UpdateGame()
   // if(mTBPlayer1 != nullptr) mTBPlayer1->Update(deltaTime);
   // if(mTBPlayer2 != nullptr) mTBPlayer2->Update(deltaTime);
   // for(auto field : mFields) field->Update(deltaTime);
-  // mUpdatingActors = false;
+  mUpdatingActors = false;
   
   // move penidingActors to Actors
   for(auto pending:mPendingActors) mActors.emplace_back(pending);

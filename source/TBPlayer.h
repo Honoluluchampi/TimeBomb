@@ -14,7 +14,7 @@ public:
     TBPlayer(class TimeBombApp* game, class Field* ip, bool player, const int &bombnum, int playerType = 0); // ip : initial position
     ~TBPlayer(); // call the ending manager
 
-    void UpdateActor(float deltaTime);
+    void UpdateActor(float deltaTime) override;
     void MoveToNextField(float deltaTime);
 
     // getter setter

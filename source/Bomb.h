@@ -5,7 +5,7 @@ class Bomb : public Actor
 {
 public:
     Bomb(class TimeBombApp* app, class TBPlayer* owner,
-     class Field *field, int &count, bool visible);
+     class Field *field, int count, bool visible);
     ~Bomb();
 
     // change count function

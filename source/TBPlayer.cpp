@@ -9,7 +9,7 @@
 #include <iostream>
 
 TBPlayer::TBPlayer(TimeBombApp *game, Field *ip, bool player, const int &bombnum, int playerType) : 
-Actor(game),  mHitPoint(INITIAL_HIT_POINT), mCurrentField(ip), mIsMoving(false), mTime(0.0f), mPlayerType(playerType)
+Actor(game), mApp(game), mHitPoint(INITIAL_HIT_POINT), mCurrentField(ip), mIsMoving(false), mTime(0.0f), mPlayerType(playerType)
 {
     // ball sprite
     mBallSprite = new SpriteComponent(this, 100, MANUAL_POSITIONING);
